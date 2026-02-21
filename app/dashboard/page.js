@@ -113,7 +113,7 @@ export default function Dashboard() {
       <nav className="flex items-center justify-between px-8 py-5 border-b border-gray-100">
         <span className="text-xl font-bold text-black">BingeStudy</span>
         <div className="flex items-center gap-4">
-          <span className="text-sm text-gray-400">{user.email}</span>
+          {/* <span className="text-sm text-gray-400">{user.email}</span> */}
           <button
             onClick={handleLogout}
             className="text-sm font-medium text-black border border-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all duration-200"

@@ -10,7 +10,7 @@ BingeStudy is a real-time, web-based study platform where students can create pr
 
 ## 🌐 Live Demo
 
-🔗 **[bingestudy.vercel.app](https://bingestudy.vercel.app)** *(update this link after deployment)*
+🔗 **[bingestudy.vercel.app](https://bingestudy.vercel.app)**
 
 ---
 
@@ -35,7 +35,7 @@ Students today share notes on WhatsApp, store files on Google Drive, and ask dou
 - 💬 **Real-Time Chat** — Messages appear live for all group members without refreshing
 - 📁 **Multi-Format File Sharing** — Share Images, PDFs, Audio recordings, Text notes, Documents, and URLs
 - 🛡️ **Role-Based Access Control** — Admins can delete messages, remove members, and promote others. Members manage only their own messages
-- 🤖 **AI Chatbot** — Built-in assistant powered by Google Gemini 1.5 Flash for instant doubt resolution
+- 🤖 **AI Chatbot** — Built-in assistant powered by Google Gemini 2.5 Flash for instant doubt resolution
 - 📱 **Fully Responsive** — Works seamlessly on mobile, tablet, and desktop
 - 🎨 **Clean B&W UI** — Minimal, distraction-free design built for studying
 
@@ -52,7 +52,7 @@ Students today share notes on WhatsApp, store files on Google Drive, and ask dou
 | Authentication | Supabase Auth |
 | File Storage | Supabase Storage |
 | Real-Time | Supabase Realtime |
-| AI Chatbot | Google Gemini 1.5 Flash API |
+| AI Chatbot | Google Gemini 2.5 Flash API |
 | Deployment | Vercel + Supabase |
 
 ---

@@ -5,8 +5,8 @@ export default function LandingPage() {
     <main className="min-h-screen bg-white flex flex-col">
 
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-gray-100">
-        <span className="text-xl font-bold tracking-tight text-black">
+      <nav className="flex items-center justify-between px-8 py-4 border-b border-gray-100">
+        <span className="text-2xl font-bold tracking-tight text-black">
           BingeStudy
         </span>
         <Link
@@ -18,13 +18,13 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-6">
+      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-6">
         <span className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4">
           For Students, By Students
         </span>
         <h1 className="text-5xl md:text-7xl font-black text-black leading-tight mb-6">
           Study Together.<br />
-          <span className="text-gray-400">Study Smarter.</span>
+          <span className="text-gray-700">Study Smarter.</span>
         </h1>
         <p className="text-gray-500 text-lg md:text-xl max-w-xl mb-10">
           Create private study groups, share notes and materials in real time,
@@ -60,7 +60,7 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 px-8 py-5 text-center text-gray-400 text-sm">
+      <footer className="border-t border-gray-100 px-8 py-3 text-center text-gray-400 text-sm">
         © 2025 BingeStudy. Built for students.
       </footer>
 
