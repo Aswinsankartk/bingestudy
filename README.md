@@ -1,10 +1,10 @@
 # 📚 BingeStudy
 
-### A Collaborative Note Sharing Platform for Students
+### A Collaborative Study Material Sharing Platform for Students
 
 BingeStudy is a real-time, web-based study platform where students can create private groups, share study materials, and get instant answers from an AI chatbot — all in one place.
 
-> Final Year Project | Full Stack Web Application
+> BCA 4th Semester Project | Full Stack Web Application | Bangalore University (NEP)
 
 ---
 
@@ -16,7 +16,7 @@ BingeStudy is a real-time, web-based study platform where students can create pr
 
 ## 🖼️ Screenshots
 
-> *(Add screenshots here after building the UI)*
+> _(Add screenshots here)_
 
 ---
 
@@ -31,7 +31,7 @@ Students today share notes on WhatsApp, store files on Google Drive, and ask dou
 ## ✨ Features
 
 - 🔐 **Authentication** — Google OAuth and Email/Password login via Supabase Auth
-- 👥 **Study Groups** — Create a group and get an auto-generated invite code (e.g. `BNG-4X2`). Share the code, others join instantly
+- 👥 **Study Groups** — Create a group and get an auto-generated invite code. Share the code, others join instantly
 - 💬 **Real-Time Chat** — Messages appear live for all group members without refreshing
 - 📁 **Multi-Format File Sharing** — Share Images, PDFs, Audio recordings, Text notes, Documents, and URLs
 - 🛡️ **Role-Based Access Control** — Admins can delete messages, remove members, and promote others. Members manage only their own messages
@@ -43,17 +43,17 @@ Students today share notes on WhatsApp, store files on Google Drive, and ask dou
 
 ## 🛠️ Tech Stack
 
-| Layer | Technology |
-|---|---|
-| Frontend | Next.js 14 (App Router) |
-| Styling | Tailwind CSS + shadcn/ui |
-| Backend | Next.js API Routes |
-| Database | Supabase (PostgreSQL) |
-| Authentication | Supabase Auth |
-| File Storage | Supabase Storage |
-| Real-Time | Supabase Realtime |
-| AI Chatbot | Google Gemini 2.5 Flash API |
-| Deployment | Vercel + Supabase |
+| Layer          | Technology                           |
+| -------------- | ------------------------------------ |
+| Frontend       | Next.js 14 (App Router)              |
+| Styling        | Tailwind CSS + shadcn/ui             |
+| Backend        | Next.js API Routes                   |
+| Database       | Supabase (PostgreSQL)                |
+| Authentication | Supabase Auth (Google OAuth + Email) |
+| File Storage   | Supabase Storage                     |
+| Real-Time      | Supabase Realtime                    |
+| AI Chatbot     | Google Gemini 2.5 Flash API          |
+| Deployment     | Vercel + Supabase                    |
 
 ---
 
@@ -62,23 +62,43 @@ Students today share notes on WhatsApp, store files on Google Drive, and ask dou
 ```
 bingestudy/
 ├── app/
-│   ├── (auth)/
-│   │   └── login/          # Login page
-│   ├── dashboard/          # User dashboard (all groups)
+│   ├── api/
+│   │   ├── chat/
+│   │   │   └── route.js          # Gemini AI chatbot
+│   │   ├── groups/
+│   │   │   ├── route.js          # Create & list groups
+│   │   │   ├── join/
+│   │   │   │   └── route.js      # Join group via invite code
+│   │   │   └── [id]/
+│   │   │       ├── route.js      # Get / delete group
+│   │   │       └── members/
+│   │   │           └── route.js  # Group member management
+│   │   ├── messages/
+│   │   │   └── [id]/
+│   │   │       └── route.js      # Message CRUD
+│   │   └── upload/
+│   │       └── route.js          # File upload to Supabase Storage
+│   ├── auth/
+│   │   └── callback/
+│   │       └── route.js          # OAuth callback handler
+│   ├── dashboard/
+│   │   └── page.js               # User dashboard (all groups)
 │   ├── group/
-│   │   └── [id]/           # Group chat room
-│   └── api/
-│       ├── groups/         # Group CRUD API routes
-│       ├── messages/       # Message API routes
-│       └── chat/           # Gemini AI chatbot route
-├── components/
-│   ├── ui/                 # shadcn/ui components
-│   ├── chat/               # Chat UI components
-│   └── groups/             # Group-related components
+│   │   └── [id]/
+│   │       └── page.js           # Group chat room
+│   ├── login/
+│   │   └── page.js               # Login page
+│   ├── globals.css
+│   ├── layout.js
+│   └── page.js                   # Landing page
 ├── lib/
-│   ├── supabase/           # Supabase client setup
-│   └── utils.js            # Utility functions
-└── public/                 # Static assets
+│   ├── supabase/
+│   │   ├── client.js             # Browser client
+│   │   └── server.js             # Server client (SSR)
+│   └── utils.js                  # Utility functions
+├── middleware.js                  # Auth route protection
+├── next.config.mjs
+└── public/                       # Static assets
 ```
 
 ---
@@ -112,7 +132,7 @@ ai_chats (id, group_id, user_id, role, content, created_at)
 ### 1. Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/bingestudy.git
+git clone https://github.com/Aswinsankartk/bingestudy.git
 cd bingestudy
 ```
 
@@ -132,12 +152,12 @@ NEXT_PUBLIC_SUPABASE_ANON_KEY=your_supabase_anon_key
 GEMINI_API_KEY=your_gemini_api_key
 ```
 
-> Get Supabase credentials from: Project Settings → API
+> Get Supabase credentials from: Project Settings → API  
 > Get Gemini API key from: aistudio.google.com → Get API Key
 
 ### 4. Set up the database
 
-Go to your Supabase project → SQL Editor and run the schema from `/lib/supabase/schema.sql`
+Go to your Supabase project → SQL Editor and run the schema to create the required tables.
 
 ### 5. Run the development server
 
@@ -164,24 +184,25 @@ Every push to the `main` branch auto-deploys.
 
 ## 🔐 Role-Based Access Control
 
-| Permission | Member | Admin |
-|---|---|---|
-| Send messages | ✅ | ✅ |
-| Delete own messages | ✅ | ✅ |
-| Delete any message | ❌ | ✅ |
-| Remove members | ❌ | ✅ |
-| Promote to Admin | ❌ | ✅ |
-| Leave group | ✅ | ✅ |
+| Permission          | Member | Admin |
+| ------------------- | ------ | ----- |
+| Send messages       | ✅     | ✅    |
+| Delete own messages | ✅     | ✅    |
+| Delete any message  | ❌     | ✅    |
+| Remove members      | ❌     | ✅    |
+| Promote to Admin    | ❌     | ✅    |
+| Leave group         | ✅     | ✅    |
 
-> The group creator is assigned Super Admin and cannot be removed.
+> The group creator is assigned as Admin and cannot be removed.
 
 ---
 
 ## 🤖 AI Chatbot
 
-The built-in AI assistant is powered by **Google Gemini 1.5 Flash**. Students can ask subject-related doubts directly inside the group room without switching apps.
+The built-in AI assistant is powered by **Google Gemini 2.5 Flash**. Students can ask subject-related doubts directly inside the group room without switching apps.
 
 **Free tier limits:**
+
 - 1,500 requests/day
 - No credit card required
 
@@ -191,10 +212,11 @@ The built-in AI assistant is powered by **Google Gemini 1.5 Flash**. Students ca
 
 - [x] Google OAuth + Email authentication
 - [x] Group creation with invite codes
+- [x] Join group via invite code
 - [x] Real-time chat
-- [x] File sharing (images, PDFs, audio, docs)
+- [x] File upload and sharing
 - [x] Role-based access control
-- [x] AI chatbot (Gemini)
+- [x] AI chatbot (Gemini 2.5 Flash)
 - [ ] Document-aware AI (RAG — V2)
 - [ ] Pin important messages
 - [ ] Group search and discovery
@@ -205,17 +227,17 @@ The built-in AI assistant is powered by **Google Gemini 1.5 Flash**. Students ca
 
 ## 👨‍💻 Author
 
-**Aswin Sankar TK**
-BCA Final Year Student
+**Aswin Sankar TK**  
+BCA 2nd Year Student | Bangalore University (NEP)
 
-🔗 [LinkedIn](https://linkedin.com/in/aswinsankartk) | 🐙 [GitHub](https://github.com/aswinsankartk)
+🔗 [LinkedIn](https://linkedin.com/in/aswinsankartk) | 🐙 [GitHub](https://github.com/Aswinsankartk)
 
 ---
 
 ## 📄 License
 
-This project is open source and available under the [MIT License](LICENSE).
+This project is open source and available under the [MIT License](LICENSE.txt).
 
 ---
 
-<p align="center">Built with ❤️ as a BCA Final Year Project</p>
+<p align="center">Built with ❤️ as a BCA Academic Project</p>
