@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import { Plus, UserPlus, Trash2, Users, LogOut, BookOpen } from "lucide-react";
 
 export default function Dashboard() {
   const supabase = createClient();
@@ -13,14 +14,12 @@ export default function Dashboard() {
   const [loading, setLoading] = useState(true);
   const [deletingGroupId, setDeletingGroupId] = useState(null);
 
-  // Create Group Modal
   const [showCreate, setShowCreate] = useState(false);
   const [groupName, setGroupName] = useState("");
   const [groupSubject, setGroupSubject] = useState("");
   const [createLoading, setCreateLoading] = useState(false);
   const [createError, setCreateError] = useState("");
 
-  // Join Group Modal
   const [showJoin, setShowJoin] = useState(false);
   const [joinCode, setJoinCode] = useState("");
   const [joinLoading, setJoinLoading] = useState(false);
@@ -45,9 +44,7 @@ export default function Dashboard() {
     setLoading(true);
     const res = await fetch("/api/groups");
     const data = await res.json();
-    if (data.memberships) {
-      setGroups(data.memberships);
-    }
+    if (data.memberships) setGroups(data.memberships);
     setLoading(false);
   };
 
@@ -61,7 +58,6 @@ export default function Dashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ name: groupName, subject: groupSubject }),
     });
-
     const data = await res.json();
 
     if (!res.ok) {
@@ -87,7 +83,6 @@ export default function Dashboard() {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ code: joinCode }),
     });
-
     const data = await res.json();
 
     if (!res.ok) {
@@ -109,11 +104,7 @@ export default function Dashboard() {
     if (!confirmed) return;
 
     setDeletingGroupId(groupId);
-
-    const res = await fetch(`/api/groups/${groupId}`, {
-      method: "DELETE",
-    });
-
+    const res = await fetch(`/api/groups/${groupId}`, { method: "DELETE" });
     const data = await res.json();
 
     if (res.ok) {
@@ -121,7 +112,6 @@ export default function Dashboard() {
     } else {
       alert(data.error);
     }
-
     setDeletingGroupId(null);
   };
 
@@ -135,51 +125,67 @@ export default function Dashboard() {
   return (
     <main className="min-h-screen bg-white">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-8 py-5 border-b border-gray-100">
-        <span className="text-xl font-bold text-black">BingeStudy</span>
-        <div className="flex items-center gap-4">
-          {/* <span className="text-sm text-gray-400">{user.email}</span> */}
-          <button
-            onClick={handleLogout}
-            className="text-sm font-medium text-black border border-black px-4 py-2 rounded-lg hover:bg-black hover:text-white transition-all duration-200"
-          >
-            Logout
-          </button>
-        </div>
+      <nav className="flex items-center justify-between px-6 md:px-8 py-4 border-b border-gray-100">
+        <span className="text-xl font-black text-black">BingeStudy</span>
+        <button
+          onClick={handleLogout}
+          className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition-all duration-200"
+        >
+          <LogOut size={16} />
+          <span className="hidden sm:inline">Logout</span>
+        </button>
       </nav>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-8 py-12">
-        <h2 className="text-3xl font-black text-black mb-2">Your Groups</h2>
-        <p className="text-gray-400 mb-8">
-          Create a new group or join one with an invite code.
-        </p>
+      <div className="max-w-4xl mx-auto px-6 md:px-8 py-10">
+        <div className="flex items-center justify-between mb-8">
+          <div>
+            <h2 className="text-2xl md:text-3xl font-black text-black mb-1">
+              Your Groups
+            </h2>
+            <p className="text-gray-400 text-sm">
+              Create a new group or join one with an invite code.
+            </p>
+          </div>
+        </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-4 mb-12">
+        <div className="flex gap-3 mb-10">
           <button
             onClick={() => setShowCreate(true)}
-            className="bg-black text-white px-6 py-3 rounded-xl text-sm font-semibold hover:bg-gray-800 transition-all duration-200"
+            className="flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-gray-800 hover:scale-105 transition-all duration-200"
           >
-            + Create Group
+            <Plus size={16} />
+            Create Group
           </button>
           <button
             onClick={() => setShowJoin(true)}
-            className="border border-black text-black px-6 py-3 rounded-xl text-sm font-semibold hover:bg-black hover:text-white transition-all duration-200"
+            className="flex items-center gap-2 border border-black text-black px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-black hover:text-white transition-all duration-200"
           >
+            <UserPlus size={16} />
             Join Group
           </button>
         </div>
 
         {/* Groups List */}
         {loading ? (
-          <p className="text-gray-400 text-sm">Loading groups...</p>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {[1, 2, 3, 4].map((i) => (
+              <div
+                key={i}
+                className="border border-gray-100 rounded-2xl p-6 animate-pulse"
+              >
+                <div className="h-4 bg-gray-100 rounded mb-3 w-3/4" />
+                <div className="h-3 bg-gray-100 rounded w-1/2" />
+              </div>
+            ))}
+          </div>
         ) : groups.length === 0 ? (
-          <div className="text-center py-20 border border-dashed border-gray-200 rounded-2xl">
-            <p className="text-4xl mb-4">📚</p>
-            <p className="text-gray-400 text-sm">
-              You haven't joined any groups yet.
-            </p>
+          <div className="flex flex-col items-center justify-center text-center py-20 border border-dashed border-gray-200 rounded-2xl">
+            <div className="bg-gray-50 p-4 rounded-2xl mb-4">
+              <BookOpen size={32} className="text-gray-300" />
+            </div>
+            <p className="text-gray-500 text-sm font-medium">No groups yet</p>
             <p className="text-gray-300 text-sm mt-1">
               Create one or ask a friend for their invite code.
             </p>
@@ -189,18 +195,23 @@ export default function Dashboard() {
             {groups.map((membership) => (
               <div
                 key={membership.groups.id}
-                className="border border-gray-200 rounded-2xl p-6 hover:border-black transition-all duration-200 relative group"
+                className="border border-gray-200 rounded-2xl p-6 hover:border-gray-400 hover:shadow-sm transition-all duration-200 relative group"
               >
-                {/* Clickable area */}
                 <div
                   onClick={() => router.push(`/group/${membership.groups.id}`)}
                   className="cursor-pointer"
                 >
-                  <div className="flex items-start justify-between mb-3">
-                    <h3 className="font-bold text-black text-lg">
+                  <div className="flex items-start justify-between mb-2 pr-6">
+                    <h3 className="font-bold text-black text-base leading-snug">
                       {membership.groups.name}
                     </h3>
-                    <span className="text-xs font-medium bg-gray-100 text-gray-500 px-2 py-1 rounded-lg">
+                    <span
+                      className={`text-xs font-semibold px-2 py-0.5 rounded-md ml-2 shrink-0 ${
+                        membership.role === "admin"
+                          ? "bg-black text-white"
+                          : "bg-gray-100 text-gray-500"
+                      }`}
+                    >
                       {membership.role}
                     </span>
                   </div>
@@ -209,12 +220,14 @@ export default function Dashboard() {
                       {membership.groups.subject}
                     </p>
                   )}
-                  <p className="text-xs text-gray-300 font-mono">
-                    Code: {membership.groups.code}
-                  </p>
+                  <div className="flex items-center gap-1.5">
+                    <Users size={11} className="text-gray-300" />
+                    <p className="text-xs text-gray-300 font-mono">
+                      {membership.groups.code}
+                    </p>
+                  </div>
                 </div>
 
-                {/* Delete button — only for group creator (admin) */}
                 {membership.role === "admin" && (
                   <button
                     onClick={() =>
@@ -224,111 +237,110 @@ export default function Dashboard() {
                       )
                     }
                     disabled={deletingGroupId === membership.groups.id}
-                    className="absolute top-4 right-4 text-xs text-gray-300 hover:text-red-500 transition-all disabled:opacity-40"
+                    className="absolute top-4 right-4 text-gray-200 hover:text-red-400 transition-all duration-200 disabled:opacity-40"
                     title="Delete group"
                   >
-                    {deletingGroupId === membership.groups.id ? "..." : "🗑️"}
+                    {deletingGroupId === membership.groups.id ? (
+                      <div className="w-3.5 h-3.5 border-2 border-gray-300 border-t-transparent rounded-full animate-spin" />
+                    ) : (
+                      <Trash2 size={14} />
+                    )}
                   </button>
                 )}
               </div>
             ))}
           </div>
         )}
-
-        {showCreate && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
-            <div className="bg-white rounded-2xl p-8 w-full max-w-md">
-              <h3 className="text-xl font-black text-black mb-6">
-                Create a Group
-              </h3>
-              <form
-                onSubmit={handleCreateGroup}
-                className="flex flex-col gap-4"
-              >
-                <input
-                  type="text"
-                  placeholder="Group name (e.g. DBMS Study Group)"
-                  value={groupName}
-                  onChange={(e) => setGroupName(e.target.value)}
-                  required
-                  className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all"
-                />
-                <input
-                  type="text"
-                  placeholder="Subject (e.g. Database Management)"
-                  value={groupSubject}
-                  onChange={(e) => setGroupSubject(e.target.value)}
-                  className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all"
-                />
-                {createError && (
-                  <p className="text-sm text-red-500">{createError}</p>
-                )}
-                <div className="flex gap-3 mt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowCreate(false);
-                      setCreateError("");
-                    }}
-                    className="flex-1 border border-gray-200 text-black rounded-xl py-3 text-sm font-semibold hover:bg-gray-50 transition-all"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={createLoading}
-                    className="flex-1 bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 transition-all disabled:opacity-50"
-                  >
-                    {createLoading ? "Creating..." : "Create"}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
-
-        {showJoin && (
-          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center px-4 z-50">
-            <div className="bg-white rounded-2xl p-8 w-full max-w-md">
-              <h3 className="text-xl font-black text-black mb-6">
-                Join a Group
-              </h3>
-              <form onSubmit={handleJoinGroup} className="flex flex-col gap-4">
-                <input
-                  type="text"
-                  placeholder="Enter invite code (e.g. BNG4X2)"
-                  value={joinCode}
-                  onChange={(e) => setJoinCode(e.target.value)}
-                  required
-                  className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all uppercase"
-                />
-                {joinError && (
-                  <p className="text-sm text-red-500">{joinError}</p>
-                )}
-                <div className="flex gap-3 mt-2">
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setShowJoin(false);
-                      setJoinError("");
-                    }}
-                    className="flex-1 border border-gray-200 text-black rounded-xl py-3 text-sm font-semibold hover:bg-gray-50 transition-all"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    disabled={joinLoading}
-                    className="flex-1 bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 transition-all disabled:opacity-50"
-                  >
-                    {joinLoading ? "Joining..." : "Join"}
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        )}
       </div>
+
+      {/* Create Group Modal */}
+      {showCreate && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center px-4 z-50 animate-fade-in">
+          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl">
+            <h3 className="text-xl font-black text-black mb-5">
+              Create a Group
+            </h3>
+            <form onSubmit={handleCreateGroup} className="flex flex-col gap-4">
+              <input
+                type="text"
+                placeholder="Group name (e.g. DBMS Study Group)"
+                value={groupName}
+                onChange={(e) => setGroupName(e.target.value)}
+                required
+                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all"
+              />
+              <input
+                type="text"
+                placeholder="Subject (e.g. Database Management)"
+                value={groupSubject}
+                onChange={(e) => setGroupSubject(e.target.value)}
+                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all"
+              />
+              {createError && (
+                <p className="text-sm text-red-500">{createError}</p>
+              )}
+              <div className="flex gap-3 mt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowCreate(false);
+                    setCreateError("");
+                  }}
+                  className="flex-1 border border-gray-200 text-black rounded-xl py-3 text-sm font-semibold hover:bg-gray-50 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={createLoading}
+                  className="flex-1 bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 transition-all disabled:opacity-50"
+                >
+                  {createLoading ? "Creating..." : "Create"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* Join Group Modal */}
+      {showJoin && (
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center px-4 z-50 animate-fade-in">
+          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl">
+            <h3 className="text-xl font-black text-black mb-5">Join a Group</h3>
+            <form onSubmit={handleJoinGroup} className="flex flex-col gap-4">
+              <input
+                type="text"
+                placeholder="Enter invite code (e.g. BNG4X2)"
+                value={joinCode}
+                onChange={(e) => setJoinCode(e.target.value)}
+                required
+                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all uppercase"
+              />
+              {joinError && <p className="text-sm text-red-500">{joinError}</p>}
+              <div className="flex gap-3 mt-1">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setShowJoin(false);
+                    setJoinError("");
+                  }}
+                  className="flex-1 border border-gray-200 text-black rounded-xl py-3 text-sm font-semibold hover:bg-gray-50 transition-all"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  disabled={joinLoading}
+                  className="flex-1 bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 transition-all disabled:opacity-50"
+                >
+                  {joinLoading ? "Joining..." : "Join"}
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
     </main>
   );
 }
