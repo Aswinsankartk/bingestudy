@@ -16,20 +16,35 @@ BingeStudy is a real-time, web-based study platform where students can create pr
 
 ## 🖼️ Screenshots
 
-<img width="1800" height="1125" alt="Landing Page" src="https://github.com/user-attachments/assets/9cfc83e8-bf87-412b-9c60-5be78014b4c5" />
-> _(Landing Page)_
+<img width="1800" height="1125" alt="Landing Page" src="https://github.com/user-attachments/assets/9566df09-aa1d-472d-9c96-dc5c361f07bd" />
 
-<img width="1800" height="1125" alt="Login Page" src="https://github.com/user-attachments/assets/4aa11ea8-2d4c-4c4d-9688-909aaca72f83" />
-> _(Login Page)_
+_Landing page_
 
-<img width="1800" height="1125" alt="Dashboard" src="https://github.com/user-attachments/assets/866cc11e-5bb2-442c-af20-c6844107279f" />
-> _(Dashboard)_
 
-<img width="1800" height="1125" alt="Chats Page" src="https://github.com/user-attachments/assets/07329e8f-0e63-4994-bb6f-432cc98eacfb" />
-> _(Chat Page)_
 
-<img width="1800" height="1125" alt="AI Chatbot Page" src="https://github.com/user-attachments/assets/2e93ef11-cb74-401a-b9d5-c80a2a72d5dc" />
-> _(AI Chatbot Page)_
+<img width="1800" height="1125" alt="Login Page" src="https://github.com/user-attachments/assets/957194f8-e800-470d-adbf-8ae296539269" />
+
+_Login page_
+
+
+
+<img width="1800" height="1125" alt="Dashboard" src="https://github.com/user-attachments/assets/c462df50-738a-4000-8ce8-feb6408037d8" />
+
+_Dashboard_
+
+
+
+<img width="1800" height="1125" alt="Chat Page" src="https://github.com/user-attachments/assets/b8688391-a0ef-4402-a78c-e914c4273f36" />
+
+_Chat page_
+
+
+
+<img width="1800" height="1125" alt="AI Chatbot Page" src="https://github.com/user-attachments/assets/1d5580e4-20bc-4d5e-8389-201001adbf8f" />
+
+_AI Chatbot page_
+
+
 
 ---
 
