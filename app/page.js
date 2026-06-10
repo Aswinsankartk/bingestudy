@@ -3,6 +3,7 @@ import { BookOpen, Zap, Bot, Share2 } from "lucide-react";
 
 export default function LandingPage() {
   return (
+    <meta name="google-site-verification" content="8nizk4PobkHiKBE9GgCFJ5d59-ROmBkVepPiuQY0hzc" />
     <main className="min-h-screen bg-white flex flex-col">
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 md:px-8 py-4 border-b border-gray-100">
