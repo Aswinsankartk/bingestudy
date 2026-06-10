@@ -18,27 +18,32 @@ BingeStudy is a real-time, web-based study platform where students can create pr
 
 <img width="1800" height="1125" alt="Landing Page" src="https://github.com/user-attachments/assets/9566df09-aa1d-472d-9c96-dc5c361f07bd" />
 
-Landing page
+_Landing page_
+
 
 
 <img width="1800" height="1125" alt="Login Page" src="https://github.com/user-attachments/assets/957194f8-e800-470d-adbf-8ae296539269" />
 
-Login page
+_Login page_
+
 
 
 <img width="1800" height="1125" alt="Dashboard" src="https://github.com/user-attachments/assets/c462df50-738a-4000-8ce8-feb6408037d8" />
 
-Dashboard
+_Dashboard_
+
 
 
 <img width="1800" height="1125" alt="Chat Page" src="https://github.com/user-attachments/assets/b8688391-a0ef-4402-a78c-e914c4273f36" />
 
-Chat page
+_Chat page_
+
 
 
 <img width="1800" height="1125" alt="AI Chatbot Page" src="https://github.com/user-attachments/assets/1d5580e4-20bc-4d5e-8389-201001adbf8f" />
 
-AI Chatbot page
+_AI Chatbot page_
+
 
 
 ---
