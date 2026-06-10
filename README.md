@@ -4,7 +4,7 @@
 
 BingeStudy is a real-time, web-based study platform where students can create private groups, share study materials, and get instant answers from an AI chatbot — all in one place.
 
-> BCA 6th Semester Project | Full Stack Web Application | Bangalore University (NEP)
+> BCA Final Year Project | Full Stack Web Application | Bangalore University (NEP)
 
 ---
 
@@ -16,7 +16,20 @@ BingeStudy is a real-time, web-based study platform where students can create pr
 
 ## 🖼️ Screenshots
 
-> _(Add screenshots here)_
+<img width="1800" height="1125" alt="Landing Page" src="https://github.com/user-attachments/assets/9cfc83e8-bf87-412b-9c60-5be78014b4c5" />
+> _(Landing Page)_
+
+<img width="1800" height="1125" alt="Login Page" src="https://github.com/user-attachments/assets/4aa11ea8-2d4c-4c4d-9688-909aaca72f83" />
+> _(Login Page)_
+
+<img width="1800" height="1125" alt="Dashboard" src="https://github.com/user-attachments/assets/866cc11e-5bb2-442c-af20-c6844107279f" />
+> _(Dashboard)_
+
+<img width="1800" height="1125" alt="Chats Page" src="https://github.com/user-attachments/assets/07329e8f-0e63-4994-bb6f-432cc98eacfb" />
+> _(Chat Page)_
+
+<img width="1800" height="1125" alt="AI Chatbot Page" src="https://github.com/user-attachments/assets/2e93ef11-cb74-401a-b9d5-c80a2a72d5dc" />
+> _(AI Chatbot Page)_
 
 ---
 
