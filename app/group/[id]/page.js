@@ -3,6 +3,7 @@
 import { useEffect, useState, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter, useParams } from "next/navigation";
+import ReactMarkdown from "react-markdown";
 import {
   Trash2,
   Paperclip,
@@ -486,9 +487,58 @@ export default function GroupRoom() {
                         : "bg-gray-100 text-black rounded-bl-sm"
                     }`}
                   >
-                    <p className="whitespace-pre-wrap leading-relaxed">
+                    <ReactMarkdown
+                      className="prose prose-sm max-w-none leading-relaxed"
+                      components={{
+                        p: ({ children }) => (
+                          <p className="mb-1 last:mb-0">{children}</p>
+                        ),
+                        strong: ({ children }) => (
+                          <strong className="font-bold">{children}</strong>
+                        ),
+                        em: ({ children }) => (
+                          <em className="italic">{children}</em>
+                        ),
+                        ul: ({ children }) => (
+                          <ul className="list-disc list-inside mb-1">
+                            {children}
+                          </ul>
+                        ),
+                        ol: ({ children }) => (
+                          <ol className="list-decimal list-inside mb-1">
+                            {children}
+                          </ol>
+                        ),
+                        li: ({ children }) => (
+                          <li className="mb-0.5">{children}</li>
+                        ),
+                        code: ({ children }) => (
+                          <code className="bg-black/10 px-1 py-0.5 rounded text-xs font-mono">
+                            {children}
+                          </code>
+                        ),
+                        pre: ({ children }) => (
+                          <pre className="bg-black/10 p-2 rounded-lg text-xs font-mono overflow-x-auto my-1">
+                            {children}
+                          </pre>
+                        ),
+                        h1: ({ children }) => (
+                          <h1 className="font-bold text-base mb-1">
+                            {children}
+                          </h1>
+                        ),
+                        h2: ({ children }) => (
+                          <h2 className="font-bold text-sm mb-1">{children}</h2>
+                        ),
+                        h3: ({ children }) => (
+                          <h3 className="font-semibold text-sm mb-1">
+                            {children}
+                          </h3>
+                        ),
+                      }}
+                    >
                       {msg.content}
-                    </p>
+                    </ReactMarkdown>
                   </div>
                   <span className="text-xs text-gray-300 mt-1 px-1">
                     {msg.role === "user" ? "You" : "Gemini"}
