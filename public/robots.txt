@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://bingestudy.vercel.app
+
+# Sitemaps
+Sitemap: https://bingestudy.vercel.app/sitemap.xml
