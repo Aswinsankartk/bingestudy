@@ -62,12 +62,14 @@ export default function GroupRoom() {
   const isInitialLoad = useRef(true);
 
   useEffect(() => {
-    if (isInitialLoad.current) {
-      // Instant scroll on first load — no animation
-      messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
+    const container = document.getElementById("messages-container");
+    if (!container) return;
+
+    if (isInitialLoad.current && messages.length > 0) {
+      // Jump directly to bottom with no scroll animation
+      container.scrollTop = container.scrollHeight;
       isInitialLoad.current = false;
-    } else {
-      // Smooth scroll only for new incoming messages
+    } else if (!isInitialLoad.current) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
@@ -426,7 +428,10 @@ export default function GroupRoom() {
       {activeTab === "chat" && (
         <>
           {/* Messages — flex-1 + overflow-y-auto is the fix for the overflow issue */}
-          <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 flex flex-col gap-3">
+          <div
+            id="messages-container"
+            className="flex-1 overflow-y-auto px-4 md:px-6 py-4 flex flex-col gap-3"
+          >
             {messages.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center py-16">
                 <div className="bg-gray-50 p-4 rounded-2xl mb-3">
