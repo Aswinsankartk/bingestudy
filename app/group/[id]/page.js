@@ -224,7 +224,9 @@ export default function GroupRoom() {
   };
 
   const formatTime = (timestamp) => {
-    const date = new Date(timestamp);
+    // Append 'Z' to tell JavaScript this is UTC, not local time
+    const utcTimestamp = timestamp.endsWith("Z") ? timestamp : timestamp + "Z";
+    const date = new Date(utcTimestamp);
     const now = new Date();
     const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
 
@@ -234,12 +236,10 @@ export default function GroupRoom() {
       timeZone,
     });
 
-    // If message is from today, show only time
     if (date.toDateString() === now.toDateString()) {
       return timeStr;
     }
 
-    // If message is older, show date + time
     return (
       date.toLocaleDateString([], {
         month: "short",
