@@ -100,6 +100,16 @@ export default function GroupRoom() {
     setMyRole(membership.role);
   };
 
+  const fetchMessages = async () => {
+    const { data } = await supabase
+      .from("messages")
+      .select("*, profiles(full_name, email, avatar_url)")
+      .eq("group_id", id)
+      .eq("is_deleted", false)
+      .order("created_at", { ascending: true });
+    setMessages(data || []);
+  };
+
   const fetchMembers = async () => {
     const res = await fetch(`/api/groups/${id}/members`);
     const data = await res.json();
@@ -354,16 +364,22 @@ export default function GroupRoom() {
             {group.code}
           </span>
 
-          {/* View Members — visible to everyone */}
+          {/* Single Members button for everyone — style differs by role */}
           <button
             onClick={() => setShowMembers(true)}
-            className="flex items-center gap-1.5 text-xs font-semibold border border-gray-200 text-black px-3 py-1.5 rounded-lg hover:border-black transition-all"
+            className={`flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-lg transition-all ${
+              myRole === "admin"
+                ? "bg-black text-white hover:bg-gray-800"
+                : "border border-gray-200 text-black hover:border-black"
+            }`}
           >
             <Users size={13} />
-            <span className="hidden sm:inline">Members</span>
+            <span className="hidden sm:inline">
+              {myRole === "admin" ? "Manage" : "Members"}
+            </span>
           </button>
 
-          {/* Leave Group — only for non-creators */}
+          {/* Leave Group — only for non-admins */}
           {myRole !== "admin" && (
             <button
               onClick={handleLeaveGroup}
@@ -371,17 +387,6 @@ export default function GroupRoom() {
             >
               <LogOut size={13} />
               <span className="hidden sm:inline">Leave</span>
-            </button>
-          )}
-
-          {/* Manage Members — only for admins */}
-          {myRole === "admin" && (
-            <button
-              onClick={() => setShowMembers(true)}
-              className="flex items-center gap-1.5 text-xs font-semibold bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 transition-all"
-            >
-              <Users size={13} />
-              <span className="hidden sm:inline">Manage</span>
             </button>
           )}
         </div>
