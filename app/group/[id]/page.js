@@ -100,16 +100,6 @@ export default function GroupRoom() {
     setMyRole(membership.role);
   };
 
-  const fetchMessages = async () => {
-    const { data } = await supabase
-      .from("messages")
-      .select("*")
-      .eq("group_id", id)
-      .eq("is_deleted", false)
-      .order("created_at", { ascending: true });
-    setMessages(data || []);
-  };
-
   const fetchMembers = async () => {
     const res = await fetch(`/api/groups/${id}/members`);
     const data = await res.json();
@@ -448,11 +438,36 @@ export default function GroupRoom() {
               messages.map((msg) => {
                 const isMe = msg.sender_id === user?.id;
                 const canDelete = isMe || myRole === "admin";
+                const senderName =
+                  msg.profiles?.full_name || msg.profiles?.email || "Unknown";
+                const senderAvatar = msg.profiles?.avatar_url;
+                const senderInitials = senderName.charAt(0).toUpperCase();
+
                 return (
                   <div
                     key={msg.id}
                     className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}
                   >
+                    {/* Sender name — only show for others' messages */}
+                    {!isMe && (
+                      <div className="flex items-center gap-1.5 mb-1 px-1">
+                        {senderAvatar ? (
+                          <img
+                            src={senderAvatar}
+                            alt={senderName}
+                            className="w-4 h-4 rounded-full object-cover"
+                          />
+                        ) : (
+                          <div className="w-4 h-4 rounded-full bg-gray-200 flex items-center justify-center text-xs font-bold text-gray-500">
+                            {senderInitials}
+                          </div>
+                        )}
+                        <span className="text-xs text-gray-400">
+                          {senderName}
+                        </span>
+                      </div>
+                    )}
+
                     <div className="flex items-center gap-1.5">
                       {canDelete && isMe && (
                         <button
@@ -673,24 +688,46 @@ export default function GroupRoom() {
             <div className="flex flex-col gap-2">
               {members.map((member) => {
                 const isCurrentUser = member.user_id === user?.id;
+                const name =
+                  member.profiles?.full_name ||
+                  member.profiles?.email ||
+                  "Unknown User";
+                const avatar = member.profiles?.avatar_url;
+                const initials = name.charAt(0).toUpperCase();
+
                 return (
                   <div
                     key={member.id}
                     className="flex items-center justify-between border border-gray-100 rounded-xl px-4 py-3 hover:border-gray-200 transition-all"
                   >
-                    <div>
-                      <p className="text-sm font-medium text-black">
-                        {member.user_id.slice(0, 8)}...
-                        {isCurrentUser && (
-                          <span className="text-gray-400 text-xs ml-1">
-                            (you)
-                          </span>
-                        )}
-                      </p>
-                      <p className="text-xs text-gray-400 capitalize">
-                        {member.role}
-                      </p>
+                    <div className="flex items-center gap-3">
+                      {/* Avatar */}
+                      {avatar ? (
+                        <img
+                          src={avatar}
+                          alt={name}
+                          className="w-8 h-8 rounded-full object-cover"
+                        />
+                      ) : (
+                        <div className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-sm font-bold text-gray-500">
+                          {initials}
+                        </div>
+                      )}
+                      <div>
+                        <p className="text-sm font-medium text-black">
+                          {name}
+                          {isCurrentUser && (
+                            <span className="text-gray-400 text-xs ml-1">
+                              (you)
+                            </span>
+                          )}
+                        </p>
+                        <p className="text-xs text-gray-400 capitalize">
+                          {member.role}
+                        </p>
+                      </div>
                     </div>
+
                     {myRole === "admin" && !isCurrentUser && (
                       <div className="flex gap-2">
                         {member.role === "member" ? (
