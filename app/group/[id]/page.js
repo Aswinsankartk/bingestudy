@@ -17,6 +17,8 @@ import {
   Music,
   File,
   LogOut,
+  Download,
+  ExternalLink,
 } from "lucide-react";
 
 export default function GroupRoom() {
@@ -337,48 +339,128 @@ export default function GroupRoom() {
   };
 
   const renderMessage = (msg) => {
-    if (msg.type === "text")
+    if (msg.type === "text") {
       return <p className="text-sm leading-relaxed">{msg.content}</p>;
-    if (msg.type === "image")
+    }
+
+    if (msg.type === "image") {
       return (
-        <div>
+        <div className="flex flex-col gap-1.5">
           <img
             src={msg.file_url}
             alt={msg.content}
-            className="max-w-xs rounded-xl"
+            className="max-w-xs rounded-xl border border-white/10"
           />
-          <p className="text-xs mt-1 opacity-60">{msg.content}</p>
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-xs opacity-60 truncate">{msg.content}</p>
+            <a
+              href={msg.file_url}
+              download={msg.content}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 opacity-60 hover:opacity-100 transition-all"
+              title="Download"
+            >
+              <Download size={13} />
+            </a>
+          </div>
         </div>
       );
-    if (msg.type === "audio")
+    }
+
+    if (msg.type === "audio") {
       return (
-        <div>
-          <audio controls className="max-w-xs">
+        <div className="flex flex-col gap-2 min-w-[200px]">
+          <div className="flex items-center gap-2">
+            <div className="bg-white/10 p-2 rounded-lg">
+              <Music size={14} />
+            </div>
+            <p className="text-xs opacity-70 truncate flex-1">{msg.content}</p>
+            <a
+              href={msg.file_url}
+              download={msg.content}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 opacity-60 hover:opacity-100 transition-all"
+              title="Download"
+            >
+              <Download size={13} />
+            </a>
+          </div>
+          <audio controls className="w-full max-w-xs h-8">
             <source src={msg.file_url} />
           </audio>
-          <p className="text-xs mt-1 opacity-60">{msg.content}</p>
         </div>
       );
-    if (msg.type === "pdf")
+    }
+
+    if (msg.type === "pdf") {
       return (
-        <a
-          href={msg.file_url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center gap-2 underline text-sm"
-        >
-          <FileText size={14} /> {msg.content}
-        </a>
+        <div className="flex items-center gap-3 min-w-[180px]">
+          <div className="bg-white/10 p-2.5 rounded-lg shrink-0">
+            <FileText size={16} />
+          </div>
+          <div className="flex-1 min-w-0">
+            <p className="text-xs font-medium truncate">{msg.content}</p>
+            <p className="text-xs opacity-50 mt-0.5">PDF Document</p>
+          </div>
+          <div className="flex flex-col gap-1 shrink-0">
+            <a
+              href={msg.file_url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 hover:opacity-100 transition-all"
+              title="Open"
+            >
+              <ExternalLink size={13} />
+            </a>
+            <a
+              href={msg.file_url}
+              download={msg.content}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="opacity-60 hover:opacity-100 transition-all"
+              title="Download"
+            >
+              <Download size={13} />
+            </a>
+          </div>
+        </div>
       );
+    }
+
+    // Any other doc file
     return (
-      <a
-        href={msg.file_url}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="flex items-center gap-2 underline text-sm"
-      >
-        <File size={14} /> {msg.content}
-      </a>
+      <div className="flex items-center gap-3 min-w-[180px]">
+        <div className="bg-white/10 p-2.5 rounded-lg shrink-0">
+          <File size={16} />
+        </div>
+        <div className="flex-1 min-w-0">
+          <p className="text-xs font-medium truncate">{msg.content}</p>
+          <p className="text-xs opacity-50 mt-0.5">Document</p>
+        </div>
+        <div className="flex flex-col gap-1 shrink-0">
+          <a
+            href={msg.file_url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opacity-60 hover:opacity-100 transition-all"
+            title="Open"
+          >
+            <ExternalLink size={13} />
+          </a>
+          <a
+            href={msg.file_url}
+            download={msg.content}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="opacity-60 hover:opacity-100 transition-all"
+            title="Download"
+          >
+            <Download size={13} />
+          </a>
+        </div>
+      </div>
     );
   };
 
