@@ -9,6 +9,7 @@ export default function Dashboard() {
   const supabase = createClient();
   const router = useRouter();
 
+  const [logoutLoading, setLogoutLoading] = useState(false);
   const [user, setUser] = useState(null);
   const [groups, setGroups] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -116,6 +117,7 @@ export default function Dashboard() {
   };
 
   const handleLogout = async () => {
+    setLogoutLoading(true);
     await supabase.auth.signOut();
     router.push("/login");
   };
@@ -129,10 +131,17 @@ export default function Dashboard() {
         <span className="text-xl font-black text-black">BingeStudy</span>
         <button
           onClick={handleLogout}
-          className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition-all duration-200"
+          disabled={logoutLoading}
+          className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition-all duration-200 disabled:opacity-50"
         >
-          <LogOut size={16} />
-          <span className="hidden sm:inline">Logout</span>
+          {logoutLoading ? (
+            <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+          ) : (
+            <LogOut size={16} />
+          )}
+          <span className="hidden sm:inline">
+            {logoutLoading ? "Logging out..." : "Logout"}
+          </span>
         </button>
       </nav>
 
