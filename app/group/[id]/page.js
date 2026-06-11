@@ -101,13 +101,42 @@ export default function GroupRoom() {
   };
 
   const fetchMessages = async () => {
-    const { data } = await supabase
+    // Step 1: fetch messages
+    const { data: msgs, error } = await supabase
       .from("messages")
-      .select("*, profiles(full_name, email, avatar_url)")
+      .select("*")
       .eq("group_id", id)
       .eq("is_deleted", false)
       .order("created_at", { ascending: true });
-    setMessages(data || []);
+
+    if (error || !msgs) {
+      setMessages([]);
+      return;
+    }
+
+    // Step 2: get unique sender IDs
+    const senderIds = [
+      ...new Set(msgs.map((m) => m.sender_id).filter(Boolean)),
+    ];
+
+    // Step 3: fetch profiles for those IDs
+    const { data: profiles } = await supabase
+      .from("profiles")
+      .select("id, full_name, email, avatar_url")
+      .in("id", senderIds);
+
+    // Step 4: attach profile to each message
+    const profileMap = {};
+    profiles?.forEach((p) => {
+      profileMap[p.id] = p;
+    });
+
+    const messagesWithProfiles = msgs.map((msg) => ({
+      ...msg,
+      profiles: profileMap[msg.sender_id] || null,
+    }));
+
+    setMessages(messagesWithProfiles);
   };
 
   const fetchMembers = async () => {
@@ -127,8 +156,18 @@ export default function GroupRoom() {
           table: "messages",
           filter: `group_id=eq.${id}`,
         },
-        (payload) => {
-          setMessages((prev) => [...prev, payload.new]);
+        async (payload) => {
+          // Fetch profile for the new message sender
+          const { data: profile } = await supabase
+            .from("profiles")
+            .select("id, full_name, email, avatar_url")
+            .eq("id", payload.new.sender_id)
+            .single();
+
+          setMessages((prev) => [
+            ...prev,
+            { ...payload.new, profiles: profile || null },
+          ]);
         },
       )
       .on(
