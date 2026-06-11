@@ -16,6 +16,7 @@ import {
   FileText,
   Music,
   File,
+  LogOut,
 } from "lucide-react";
 
 export default function GroupRoom() {
@@ -186,6 +187,25 @@ export default function GroupRoom() {
     }
   };
 
+  const handleLeaveGroup = async () => {
+    const confirmed = window.confirm(
+      "Are you sure you want to leave this group?",
+    );
+    if (!confirmed) return;
+
+    const res = await fetch(`/api/groups/${id}/members`, {
+      method: "DELETE",
+    });
+
+    const data = await res.json();
+
+    if (res.ok) {
+      router.push("/dashboard");
+    } else {
+      alert(data.error);
+    }
+  };
+
   const fetchAiHistory = async () => {
     const res = await fetch(`/api/chat?groupId=${id}`);
     const data = await res.json();
@@ -332,13 +352,35 @@ export default function GroupRoom() {
           <span className="hidden sm:flex items-center gap-1.5 text-xs text-gray-400 font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg">
             {group.code}
           </span>
+
+          {/* View Members — visible to everyone */}
+          <button
+            onClick={() => setShowMembers(true)}
+            className="flex items-center gap-1.5 text-xs font-semibold border border-gray-200 text-black px-3 py-1.5 rounded-lg hover:border-black transition-all"
+          >
+            <Users size={13} />
+            <span className="hidden sm:inline">Members</span>
+          </button>
+
+          {/* Leave Group — only for non-creators */}
+          {myRole !== "admin" && (
+            <button
+              onClick={handleLeaveGroup}
+              className="flex items-center gap-1.5 text-xs font-semibold border border-red-200 text-red-400 px-3 py-1.5 rounded-lg hover:bg-red-500 hover:text-white hover:border-red-500 transition-all"
+            >
+              <LogOut size={13} />
+              <span className="hidden sm:inline">Leave</span>
+            </button>
+          )}
+
+          {/* Manage Members — only for admins */}
           {myRole === "admin" && (
             <button
               onClick={() => setShowMembers(true)}
               className="flex items-center gap-1.5 text-xs font-semibold bg-black text-white px-3 py-1.5 rounded-lg hover:bg-gray-800 transition-all"
             >
               <Users size={13} />
-              <span className="hidden sm:inline">Members</span>
+              <span className="hidden sm:inline">Manage</span>
             </button>
           )}
         </div>
