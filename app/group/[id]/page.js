@@ -214,6 +214,11 @@ export default function GroupRoom() {
   };
 
   const handleDeleteMessage = async (messageId) => {
+    const confirmed = window.confirm(
+      "Are you sure you want to delete this message?",
+    );
+    if (!confirmed) return;
+
     const res = await fetch(`/api/messages/${messageId}`, { method: "DELETE" });
     if (res.ok) {
       setMessages((prev) => prev.filter((m) => m.id !== messageId));
