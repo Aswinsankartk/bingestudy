@@ -74,8 +74,18 @@ export default function GroupRoom() {
     }
   }, [messages]);
 
+  const isInitialAiLoad = useRef(true);
+
   useEffect(() => {
-    aiEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    const container = document.getElementById("ai-container");
+    if (!container) return;
+
+    if (isInitialAiLoad.current && aiMessages.length > 0) {
+      container.scrollTop = container.scrollHeight;
+      isInitialAiLoad.current = false;
+    } else if (!isInitialAiLoad.current) {
+      aiEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [aiMessages]);
 
   const fetchGroup = async (currentUser) => {
@@ -602,7 +612,10 @@ export default function GroupRoom() {
       {/* AI Tab */}
       {activeTab === "ai" && (
         <>
-          <div className="flex-1 overflow-y-auto px-4 md:px-6 py-4 flex flex-col gap-3">
+          <div
+            id="ai-container"
+            className="flex-1 overflow-y-auto px-4 md:px-6 py-4 flex flex-col gap-3"
+          >
             {aiMessages.length === 0 ? (
               <div className="flex-1 flex flex-col items-center justify-center text-center py-16">
                 <div className="bg-gray-50 p-4 rounded-2xl mb-3">
