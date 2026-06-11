@@ -58,7 +58,8 @@ export default function ProfilePage() {
     });
 
     if (error) {
-      setMessage("Failed to save. Try again.");
+      console.log("Profile save error:", error);
+      setMessage(`Error: ${error.message}`);
     } else {
       setMessage("Profile saved successfully!");
     }
