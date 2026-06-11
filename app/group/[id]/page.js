@@ -59,8 +59,17 @@ export default function GroupRoom() {
     init();
   }, [id]);
 
+  const isInitialLoad = useRef(true);
+
   useEffect(() => {
-    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    if (isInitialLoad.current) {
+      // Instant scroll on first load — no animation
+      messagesEndRef.current?.scrollIntoView({ behavior: "instant" });
+      isInitialLoad.current = false;
+    } else {
+      // Smooth scroll only for new incoming messages
+      messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
   }, [messages]);
 
   useEffect(() => {
