@@ -224,10 +224,31 @@ export default function GroupRoom() {
   };
 
   const formatTime = (timestamp) => {
-    return new Date(timestamp).toLocaleTimeString([], {
+    const date = new Date(timestamp);
+    const now = new Date();
+    const timeZone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+
+    const timeStr = date.toLocaleTimeString([], {
       hour: "2-digit",
       minute: "2-digit",
+      timeZone,
     });
+
+    // If message is from today, show only time
+    if (date.toDateString() === now.toDateString()) {
+      return timeStr;
+    }
+
+    // If message is older, show date + time
+    return (
+      date.toLocaleDateString([], {
+        month: "short",
+        day: "numeric",
+        timeZone,
+      }) +
+      " · " +
+      timeStr
+    );
   };
 
   const renderMessage = (msg) => {
