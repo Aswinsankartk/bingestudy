@@ -14,6 +14,7 @@ export async function GET(request, { params }) {
 
   const { id } = await params;
 
+  // Get members
   const { data: members, error } = await supabase
     .from("group_members")
     .select("id, role, joined_at, user_id")
@@ -23,7 +24,20 @@ export async function GET(request, { params }) {
     return NextResponse.json({ error: error.message }, { status: 500 });
   }
 
-  return NextResponse.json({ members });
+  // Get profiles for each member separately
+  const membersWithProfiles = await Promise.all(
+    members.map(async (member) => {
+      const { data: profile } = await supabase
+        .from("profiles")
+        .select("full_name, email, avatar_url")
+        .eq("id", member.user_id)
+        .single();
+
+      return { ...member, profiles: profile };
+    }),
+  );
+
+  return NextResponse.json({ members: membersWithProfiles });
 }
 
 // Update member role or remove member

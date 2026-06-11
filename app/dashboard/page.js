@@ -129,20 +129,28 @@ export default function Dashboard() {
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 md:px-8 py-4 border-b border-gray-100">
         <span className="text-xl font-black text-black">BingeStudy</span>
-        <button
-          onClick={handleLogout}
-          disabled={logoutLoading}
-          className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition-all duration-200 disabled:opacity-50"
-        >
-          {logoutLoading ? (
-            <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
-          ) : (
-            <LogOut size={16} />
-          )}
-          <span className="hidden sm:inline">
-            {logoutLoading ? "Logging out..." : "Logout"}
-          </span>
-        </button>
+        <div className="flex items-center gap-3">
+          <button
+            onClick={() => router.push("/profile")}
+            className="text-sm font-medium text-gray-500 hover:text-black transition-all duration-200"
+          >
+            Profile
+          </button>
+          <button
+            onClick={handleLogout}
+            disabled={logoutLoading}
+            className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition-all duration-200 disabled:opacity-50"
+          >
+            {logoutLoading ? (
+              <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
+            ) : (
+              <LogOut size={16} />
+            )}
+            <span className="hidden sm:inline">
+              {logoutLoading ? "Logging out..." : "Logout"}
+            </span>
+          </button>
+        </div>
       </nav>
 
       {/* Content */}
