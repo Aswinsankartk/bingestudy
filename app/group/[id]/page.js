@@ -19,6 +19,7 @@ import {
   LogOut,
   Download,
   ExternalLink,
+  FolderOpen,
 } from "lucide-react";
 
 export default function GroupRoom() {
@@ -42,6 +43,9 @@ export default function GroupRoom() {
   const [aiInput, setAiInput] = useState("");
   const [aiLoading, setAiLoading] = useState(false);
   const aiEndRef = useRef(null);
+  const [mediaFiles, setMediaFiles] = useState([]);
+  const [mediaLoading, setMediaLoading] = useState(false);
+  const [mediaFilter, setMediaFilter] = useState("all");
 
   useEffect(() => {
     const init = async () => {
@@ -277,6 +281,14 @@ export default function GroupRoom() {
     const res = await fetch(`/api/chat?groupId=${id}`);
     const data = await res.json();
     if (data.history) setAiMessages(data.history);
+  };
+
+  const fetchMedia = async () => {
+    setMediaLoading(true);
+    const res = await fetch(`/api/groups/${id}/media`);
+    const data = await res.json();
+    if (data.media) setMediaFiles(data.media);
+    setMediaLoading(false);
   };
 
   const sendAiMessage = async (e) => {
@@ -542,6 +554,19 @@ export default function GroupRoom() {
         </button>
         <button
           onClick={() => {
+            setActiveTab("media");
+            fetchMedia();
+          }}
+          className={`flex items-center gap-1.5 py-2.5 px-3 text-sm font-semibold border-b-2 transition-all ${
+            activeTab === "media"
+              ? "border-black text-black"
+              : "border-transparent text-gray-400 hover:text-black"
+          }`}
+        >
+          <FolderOpen size={15} /> Media
+        </button>
+        <button
+          onClick={() => {
             setActiveTab("ai");
             fetchAiHistory();
           }}
@@ -691,6 +716,277 @@ export default function GroupRoom() {
         </>
       )}
 
+      {/* Media Tab */}
+      {activeTab === "media" && (
+        <div className="flex-1 overflow-y-auto flex flex-col">
+          {/* Filter Bar */}
+          <div className="flex items-center gap-2 px-4 md:px-6 py-3 border-b border-gray-100 shrink-0 overflow-x-auto">
+            {["all", "image", "pdf", "audio", "doc"].map((filter) => (
+              <button
+                key={filter}
+                onClick={() => setMediaFilter(filter)}
+                className={`shrink-0 px-3 py-1.5 rounded-lg text-xs font-semibold capitalize transition-all ${
+                  mediaFilter === filter
+                    ? "bg-black text-white"
+                    : "bg-gray-100 text-gray-500 hover:bg-gray-200"
+                }`}
+              >
+                {filter === "all"
+                  ? "All Files"
+                  : filter === "image"
+                    ? "Images"
+                    : filter === "pdf"
+                      ? "PDFs"
+                      : filter === "audio"
+                        ? "Audio"
+                        : "Docs"}
+              </button>
+            ))}
+          </div>
+
+          {/* Media Grid */}
+          <div className="flex-1 px-4 md:px-6 py-4">
+            {mediaLoading ? (
+              <div className="flex items-center justify-center py-20">
+                <div className="w-5 h-5 border-2 border-black border-t-transparent rounded-full animate-spin" />
+              </div>
+            ) : (
+              (() => {
+                const filtered =
+                  mediaFilter === "all"
+                    ? mediaFiles
+                    : mediaFiles.filter((f) =>
+                        mediaFilter === "doc"
+                          ? f.type === "doc"
+                          : f.type === mediaFilter,
+                      );
+
+                if (filtered.length === 0) {
+                  return (
+                    <div className="flex flex-col items-center justify-center text-center py-20">
+                      <div className="bg-gray-50 p-4 rounded-2xl mb-3">
+                        <FolderOpen size={28} className="text-gray-300" />
+                      </div>
+                      <p className="text-gray-400 text-sm font-medium">
+                        No files yet
+                      </p>
+                      <p className="text-gray-300 text-sm mt-1">
+                        Share files in the chat to see them here.
+                      </p>
+                    </div>
+                  );
+                }
+
+                return (
+                  <div className="space-y-3">
+                    {/* Images Grid */}
+                    {(mediaFilter === "all" || mediaFilter === "image") && (
+                      <>
+                        {filtered.filter((f) => f.type === "image").length >
+                          0 && (
+                          <div>
+                            {mediaFilter === "all" && (
+                              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
+                                Images
+                              </p>
+                            )}
+                            <div className="grid grid-cols-3 md:grid-cols-4 gap-2">
+                              {filtered
+                                .filter((f) => f.type === "image")
+                                .map((file) => (
+                                  <div
+                                    key={file.id}
+                                    className="relative group aspect-square"
+                                  >
+                                    <img
+                                      src={file.file_url}
+                                      alt={file.content}
+                                      className="w-full h-full object-cover rounded-xl border border-gray-100"
+                                    />
+                                    {/* Overlay on hover */}
+                                    <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all rounded-xl flex items-center justify-center gap-2">
+                                      <a
+                                        href={file.file_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="bg-white/90 p-1.5 rounded-lg hover:bg-white transition-all"
+                                        title="Open"
+                                      >
+                                        <ExternalLink
+                                          size={13}
+                                          className="text-black"
+                                        />
+                                      </a>
+                                      <a
+                                        href={file.file_url}
+                                        download={file.content}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="bg-white/90 p-1.5 rounded-lg hover:bg-white transition-all"
+                                        title="Download"
+                                      >
+                                        <Download
+                                          size={13}
+                                          className="text-black"
+                                        />
+                                      </a>
+                                    </div>
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {/* Audio Files */}
+                    {(mediaFilter === "all" || mediaFilter === "audio") && (
+                      <>
+                        {filtered.filter((f) => f.type === "audio").length >
+                          0 && (
+                          <div>
+                            {mediaFilter === "all" && (
+                              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 mt-4">
+                                Audio
+                              </p>
+                            )}
+                            <div className="flex flex-col gap-2">
+                              {filtered
+                                .filter((f) => f.type === "audio")
+                                .map((file) => (
+                                  <div
+                                    key={file.id}
+                                    className="flex items-center gap-3 border border-gray-100 rounded-xl px-4 py-3 hover:border-gray-200 transition-all"
+                                  >
+                                    <div className="bg-gray-100 p-2.5 rounded-lg shrink-0">
+                                      <Music
+                                        size={16}
+                                        className="text-gray-600"
+                                      />
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-sm font-medium text-black truncate">
+                                        {file.content}
+                                      </p>
+                                      <p className="text-xs text-gray-400 mt-0.5">
+                                        {formatTime(file.created_at)}
+                                      </p>
+                                    </div>
+                                    <div className="flex items-center gap-2 shrink-0">
+                                      <a
+                                        href={file.file_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-gray-400 hover:text-black transition-all"
+                                        title="Open"
+                                      >
+                                        <ExternalLink size={14} />
+                                      </a>
+                                      <a
+                                        href={file.file_url}
+                                        download={file.content}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-gray-400 hover:text-black transition-all"
+                                        title="Download"
+                                      >
+                                        <Download size={14} />
+                                      </a>
+                                    </div>
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    )}
+
+                    {/* PDFs and Docs */}
+                    {(mediaFilter === "all" ||
+                      mediaFilter === "pdf" ||
+                      mediaFilter === "doc") && (
+                      <>
+                        {filtered.filter(
+                          (f) => f.type === "pdf" || f.type === "doc",
+                        ).length > 0 && (
+                          <div>
+                            {mediaFilter === "all" && (
+                              <p className="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 mt-4">
+                                Documents
+                              </p>
+                            )}
+                            <div className="flex flex-col gap-2">
+                              {filtered
+                                .filter(
+                                  (f) => f.type === "pdf" || f.type === "doc",
+                                )
+                                .map((file) => (
+                                  <div
+                                    key={file.id}
+                                    className="flex items-center gap-3 border border-gray-100 rounded-xl px-4 py-3 hover:border-gray-200 transition-all"
+                                  >
+                                    <div className="bg-gray-100 p-2.5 rounded-lg shrink-0">
+                                      {file.type === "pdf" ? (
+                                        <FileText
+                                          size={16}
+                                          className="text-gray-600"
+                                        />
+                                      ) : (
+                                        <File
+                                          size={16}
+                                          className="text-gray-600"
+                                        />
+                                      )}
+                                    </div>
+                                    <div className="flex-1 min-w-0">
+                                      <p className="text-sm font-medium text-black truncate">
+                                        {file.content}
+                                      </p>
+                                      <div className="flex items-center gap-2 mt-0.5">
+                                        <span className="text-xs text-gray-400 uppercase font-mono">
+                                          {file.type}
+                                        </span>
+                                        <span className="text-gray-200">·</span>
+                                        <span className="text-xs text-gray-400">
+                                          {formatTime(file.created_at)}
+                                        </span>
+                                      </div>
+                                    </div>
+                                    <div className="flex items-center gap-2 shrink-0">
+                                      <a
+                                        href={file.file_url}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-gray-400 hover:text-black transition-all"
+                                        title="Open"
+                                      >
+                                        <ExternalLink size={14} />
+                                      </a>
+                                      <a
+                                        href={file.file_url}
+                                        download={file.content}
+                                        target="_blank"
+                                        rel="noopener noreferrer"
+                                        className="text-gray-400 hover:text-black transition-all"
+                                        title="Download"
+                                      >
+                                        <Download size={14} />
+                                      </a>
+                                    </div>
+                                  </div>
+                                ))}
+                            </div>
+                          </div>
+                        )}
+                      </>
+                    )}
+                  </div>
+                );
+              })()
+            )}
+          </div>
+        </div>
+      )}
       {/* AI Tab */}
       {activeTab === "ai" && (
         <>
