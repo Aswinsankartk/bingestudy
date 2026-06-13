@@ -21,7 +21,6 @@ import {
   ExternalLink,
   FolderOpen,
 } from "lucide-react";
-import NotificationBell from "@/components/NotificationBell";
 
 export default function GroupRoom() {
   const supabase = createClient();
@@ -538,7 +537,6 @@ export default function GroupRoom() {
         </div>
 
         <div className="flex items-center gap-2 shrink-0 ml-3">
-          <NotificationBell userId={user?.id} />
           <span className="hidden sm:flex items-center gap-1.5 text-xs text-gray-400 font-mono bg-gray-50 border border-gray-200 px-2.5 py-1 rounded-lg">
             {group.code}
           </span>

@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Plus, UserPlus, Trash2, Users, LogOut, BookOpen } from "lucide-react";
-import NotificationBell from "@/components/NotificationBell";
 
 export default function Dashboard() {
   const supabase = createClient();
@@ -130,8 +129,7 @@ export default function Dashboard() {
       {/* Navbar */}
       <nav className="flex items-center justify-between px-6 md:px-8 py-4 border-b border-gray-100">
         <span className="text-xl font-black text-black">BingeStudy</span>
-        <div className="flex items-center gap-4">
-          <NotificationBell userId={user.id} />
+        <div className="flex items-center gap-3">
           <button
             onClick={() => router.push("/profile")}
             className="text-sm font-medium text-gray-500 hover:text-black transition-all duration-200"
