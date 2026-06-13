@@ -355,28 +355,28 @@ export default function GroupRoom() {
       return <p className="text-sm leading-relaxed">{msg.content}</p>;
     }
 
-    if (msg.type === "image") {
+    if (msg.type === "text") {
+      const urlRegex = /(https?:\/\/[^\s]+)/g;
+      const parts = msg.content.split(urlRegex);
+
       return (
-        <div className="flex flex-col gap-1.5">
-          <img
-            src={msg.file_url}
-            alt={msg.content}
-            className="max-w-xs rounded-xl border border-white/10"
-          />
-          <div className="flex items-center justify-between gap-2">
-            <p className="text-xs opacity-60 truncate">{msg.content}</p>
-            <a
-              href={msg.file_url}
-              download={msg.content}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="shrink-0 opacity-60 hover:opacity-100 transition-all"
-              title="Download"
-            >
-              <Download size={13} />
-            </a>
-          </div>
-        </div>
+        <p className="text-sm leading-relaxed break-all">
+          {parts.map((part, i) =>
+            urlRegex.test(part) ? (
+              <a
+                key={i}
+                href={part}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="underline opacity-80 hover:opacity-100 transition-all break-all"
+              >
+                {part}
+              </a>
+            ) : (
+              <span key={i}>{part}</span>
+            ),
+          )}
+        </p>
       );
     }
 
