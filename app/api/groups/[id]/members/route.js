@@ -53,7 +53,6 @@ export async function PATCH(request, { params }) {
 
   const { id } = await params;
 
-  // Check if the requester is an admin
   const { data: requester } = await supabase
     .from("group_members")
     .select("role")
@@ -77,6 +76,15 @@ export async function PATCH(request, { params }) {
     );
   }
 
+  // Get group name for notification message
+  const { data: group } = await supabase
+    .from("groups")
+    .select("name")
+    .eq("id", id)
+    .single();
+
+  const groupName = group?.name || "a group";
+
   if (action === "remove") {
     const { error } = await supabase
       .from("group_members")
@@ -86,6 +94,15 @@ export async function PATCH(request, { params }) {
 
     if (error)
       return NextResponse.json({ error: error.message }, { status: 500 });
+
+    // Notify removed member
+    await supabase.from("notifications").insert({
+      user_id: targetUserId,
+      type: "removed",
+      message: `You were removed from "${groupName}"`,
+      group_id: id,
+    });
+
     return NextResponse.json({ message: "Member removed" });
   }
 
@@ -98,6 +115,15 @@ export async function PATCH(request, { params }) {
 
     if (error)
       return NextResponse.json({ error: error.message }, { status: 500 });
+
+    // Notify promoted member
+    await supabase.from("notifications").insert({
+      user_id: targetUserId,
+      type: "promoted",
+      message: `You were promoted to Admin in "${groupName}"`,
+      group_id: id,
+    });
+
     return NextResponse.json({ message: "Member promoted to admin" });
   }
 
@@ -110,6 +136,15 @@ export async function PATCH(request, { params }) {
 
     if (error)
       return NextResponse.json({ error: error.message }, { status: 500 });
+
+    // Notify demoted member
+    await supabase.from("notifications").insert({
+      user_id: targetUserId,
+      type: "demoted",
+      message: `Your Admin role was removed in "${groupName}"`,
+      group_id: id,
+    });
+
     return NextResponse.json({ message: "Admin role removed" });
   }
 
