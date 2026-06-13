@@ -352,35 +352,67 @@ export default function GroupRoom() {
 
   const renderMessage = (msg) => {
     if (msg.type === "text") {
-      return <p className="text-sm leading-relaxed">{msg.content}</p>;
-    }
+      const content = msg.content || "";
 
-    if (msg.type === "text") {
-      const urlRegex = /(https?:\/\/[^\s]+)/g;
-      const parts = msg.content.split(urlRegex);
+      // Split by spaces to check each word
+      const words = content.split(" ");
 
       return (
-        <p className="text-sm leading-relaxed break-all">
-          {parts.map((part, i) =>
-            urlRegex.test(part) ? (
-              <a
-                key={i}
-                href={part}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="underline opacity-80 hover:opacity-100 transition-all break-all"
-              >
-                {part}
-              </a>
-            ) : (
-              <span key={i}>{part}</span>
-            ),
-          )}
+        <p
+          className="text-sm leading-relaxed"
+          style={{ wordBreak: "break-word", overflowWrap: "anywhere" }}
+        >
+          {words.map((word, i) => {
+            const isUrl =
+              word.startsWith("http://") || word.startsWith("https://");
+            return (
+              <span key={i}>
+                {isUrl ? (
+                  <a
+                    href={word}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="underline opacity-80 hover:opacity-100 transition-all"
+                    style={{ wordBreak: "break-all" }}
+                  >
+                    {word}
+                  </a>
+                ) : (
+                  word
+                )}
+                {i < words.length - 1 ? " " : ""}
+              </span>
+            );
+          })}
         </p>
       );
     }
 
-    if (msg.type === "audio") {
+    if (msg.type === "image")
+      return (
+        <div className="flex flex-col gap-1.5">
+          <img
+            src={msg.file_url}
+            alt={msg.content}
+            className="max-w-xs rounded-xl border border-white/10"
+          />
+          <div className="flex items-center justify-between gap-2">
+            <p className="text-xs opacity-60 truncate">{msg.content}</p>
+            <a
+              href={msg.file_url}
+              download={msg.content}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="shrink-0 opacity-60 hover:opacity-100 transition-all"
+              title="Download"
+            >
+              <Download size={13} />
+            </a>
+          </div>
+        </div>
+      );
+
+    if (msg.type === "audio")
       return (
         <div className="flex flex-col gap-2 min-w-[200px]">
           <div className="flex items-center gap-2">
@@ -404,9 +436,8 @@ export default function GroupRoom() {
           </audio>
         </div>
       );
-    }
 
-    if (msg.type === "pdf") {
+    if (msg.type === "pdf")
       return (
         <div className="flex items-center gap-3 min-w-[180px]">
           <div className="bg-white/10 p-2.5 rounded-lg shrink-0">
@@ -439,9 +470,7 @@ export default function GroupRoom() {
           </div>
         </div>
       );
-    }
 
-    // Any other doc file
     return (
       <div className="flex items-center gap-3 min-w-[180px]">
         <div className="bg-white/10 p-2.5 rounded-lg shrink-0">
