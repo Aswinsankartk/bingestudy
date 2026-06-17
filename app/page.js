@@ -19,9 +19,8 @@ export default function LandingPage() {
 
       {/* Hero Section */}
       <section className="relative flex-1 flex flex-col items-center justify-center text-center px-6 py-12 overflow-hidden">
-        {/* Soft ambient background glow */}
-        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gradient-to-b from-gray-50 to-transparent rounded-full blur-3xl opacity-60 pointer-events-none" />
-
+        <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_60%_50%_at_50%_0%,#000_60%,transparent_100%)] pointer-events-none" />
+        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[700px] h-[450px] bg-gradient-to-b from-gray-100 to-transparent rounded-full blur-3xl opacity-60 pointer-events-none" />
         <span
           className="relative text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4 animate-fade-in-up"
           style={{ animationDelay: "0ms", animationFillMode: "backwards" }}
@@ -109,8 +108,9 @@ export default function LandingPage() {
       </section>
 
       {/* Footer */}
-      <footer className="border-t border-gray-100 px-6 py-4 text-center text-gray-400 text-sm">
-        © 2025 BingeStudy. Built for students.
+      <footer className="relative border-t border-gray-100 px-6 py-4 text-center text-gray-400 text-sm overflow-hidden">
+        <div className="absolute inset-0 bg-dot-grid opacity-40 pointer-events-none" />
+        <span className="relative">© 2026 BingeStudy. Built for students.</span>
       </footer>
     </main>
   );
