@@ -59,14 +59,19 @@ export default function LoginPage() {
       {/* Background texture — dot grid + ambient glow */}
       <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000_40%,transparent_100%)] pointer-events-none" />
       <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-gradient-to-b from-gray-100 to-transparent rounded-full blur-3xl opacity-50 pointer-events-none" />
-
       {/* Card */}
       <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-2xl p-8 shadow-xl shadow-gray-100/50 animate-scale-in">
         {/* Logo */}
-        <h1 className="text-2xl font-black text-black text-center mb-1">
+        <h1
+          className="text-2xl font-black text-black text-center mb-1 animate-fade-in-up"
+          style={{ animationDelay: "60ms", animationFillMode: "backwards" }}
+        >
           BingeStudy
         </h1>
-        <p className="text-gray-400 text-sm text-center mb-8">
+        <p
+          key={isSignUp ? "signup-label" : "login-label"}
+          className="text-gray-400 text-sm text-center mb-8 animate-fade-in"
+        >
           {isSignUp ? "Create your account" : "Welcome back"}
         </p>
 
@@ -74,7 +79,8 @@ export default function LoginPage() {
         <button
           onClick={handleGoogleLogin}
           disabled={googleLoading}
-          className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-medium text-black hover:bg-gray-50 transition-all duration-200 mb-6 disabled:opacity-60"
+          className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-medium text-black hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition-all duration-200 mb-6 disabled:opacity-60 animate-fade-in-up"
+          style={{ animationDelay: "120ms", animationFillMode: "backwards" }}
         >
           {googleLoading ? (
             <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
@@ -102,21 +108,28 @@ export default function LoginPage() {
         </button>
 
         {/* Divider */}
-        <div className="flex items-center gap-3 mb-6">
+        <div
+          className="flex items-center gap-3 mb-6 animate-fade-in-up"
+          style={{ animationDelay: "160ms", animationFillMode: "backwards" }}
+        >
           <div className="flex-1 h-px bg-gray-200" />
           <span className="text-gray-400 text-xs">or</span>
           <div className="flex-1 h-px bg-gray-200" />
         </div>
 
         {/* Email/Password Form */}
-        <form onSubmit={handleEmailAuth} className="flex flex-col gap-4">
+        <form
+          onSubmit={handleEmailAuth}
+          className="flex flex-col gap-4 animate-fade-in-up"
+          style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
+        >
           <input
             type="email"
             placeholder="Email address"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-black transition-all"
+            className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-black focus:shadow-sm transition-all duration-200"
           />
           <input
             type="password"
@@ -124,32 +137,37 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-black transition-all"
+            className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-black focus:shadow-sm transition-all duration-200"
           />
 
           {/* Error / Success Message */}
           {message && (
-            <p className="text-sm text-center text-gray-500">{message}</p>
+            <p className="text-sm text-center text-gray-500 animate-fade-in-down">
+              {message}
+            </p>
           )}
 
           <button
             type="submit"
             disabled={loading}
-            className="bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 transition-all duration-200 disabled:opacity-50"
+            className="bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:active:scale-100"
           >
             {loading ? "Please wait..." : isSignUp ? "Create Account" : "Login"}
           </button>
         </form>
 
         {/* Toggle Sign Up / Login */}
-        <p className="text-center text-sm text-gray-400 mt-6">
+        <p
+          className="text-center text-sm text-gray-400 mt-6 animate-fade-in-up"
+          style={{ animationDelay: "240ms", animationFillMode: "backwards" }}
+        >
           {isSignUp ? "Already have an account?" : "Don't have an account?"}{" "}
           <button
             onClick={() => {
               setIsSignUp(!isSignUp);
               setMessage("");
             }}
-            className="text-black font-semibold hover:underline"
+            className="text-black font-semibold hover:underline active:opacity-60 transition-opacity duration-150"
           >
             {isSignUp ? "Login" : "Sign Up"}
           </button>
