@@ -55,9 +55,13 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-white flex flex-col items-center justify-center px-4">
+    <main className="relative min-h-screen bg-white flex flex-col items-center justify-center px-4 overflow-hidden">
+      {/* Background texture — dot grid + ambient glow */}
+      <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000_40%,transparent_100%)] pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-gradient-to-b from-gray-100 to-transparent rounded-full blur-3xl opacity-50 pointer-events-none" />
+
       {/* Card */}
-      <div className="w-full max-w-md border border-gray-200 rounded-2xl p-8">
+      <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-2xl p-8 shadow-xl shadow-gray-100/50 animate-scale-in">
         {/* Logo */}
         <h1 className="text-2xl font-black text-black text-center mb-1">
           BingeStudy
