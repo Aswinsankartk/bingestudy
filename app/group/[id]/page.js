@@ -1042,14 +1042,13 @@ export default function GroupRoom() {
                   className={`flex flex-col ${msg.role === "user" ? "items-end" : "items-start"}`}
                 >
                   <div
-                    className={`max-w-[75vw] md:max-w-lg px-4 py-2.5 rounded-2xl text-sm ${
+                    className={`max-w-[75vw] md:max-w-lg px-4 py-2.5 rounded-2xl text-sm prose prose-sm max-w-none leading-relaxed ${
                       msg.role === "user"
                         ? "bg-black text-white rounded-br-sm"
                         : "bg-gray-100 text-black rounded-bl-sm"
                     }`}
                   >
                     <ReactMarkdown
-                      className="prose prose-sm max-w-none leading-relaxed"
                       components={{
                         p: ({ children }) => (
                           <p className="mb-1 last:mb-0">{children}</p>
