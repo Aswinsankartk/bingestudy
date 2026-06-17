@@ -18,22 +18,38 @@ export default function LandingPage() {
       </nav>
 
       {/* Hero Section */}
-      <section className="flex-1 flex flex-col items-center justify-center text-center px-6 py-12">
-        <span className="text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4 animate-fade-in">
+      <section className="relative flex-1 flex flex-col items-center justify-center text-center px-6 py-12 overflow-hidden">
+        {/* Soft ambient background glow */}
+        <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-gradient-to-b from-gray-50 to-transparent rounded-full blur-3xl opacity-60 pointer-events-none" />
+
+        <span
+          className="relative text-xs font-semibold uppercase tracking-widest text-gray-400 mb-4 animate-fade-in-up"
+          style={{ animationDelay: "0ms", animationFillMode: "backwards" }}
+        >
           For Students, By Students
         </span>
-        <h1 className="text-4xl md:text-7xl font-black text-black leading-tight mb-6">
+
+        <h1
+          className="relative text-4xl md:text-7xl font-black text-black leading-tight mb-6 animate-fade-in-up"
+          style={{ animationDelay: "100ms", animationFillMode: "backwards" }}
+        >
           Study Together.
           <br />
           <span className="text-gray-400">Study Smarter.</span>
         </h1>
-        <p className="text-gray-500 text-base md:text-xl max-w-xl mb-10">
+
+        <p
+          className="relative text-gray-500 text-base md:text-xl max-w-xl mb-10 animate-fade-in-up"
+          style={{ animationDelay: "200ms", animationFillMode: "backwards" }}
+        >
           Create private study groups, share notes and materials in real time,
           and get instant answers from an AI assistant — all in one place.
         </p>
+
         <Link
           href="/login"
-          className="bg-black text-white text-base font-semibold px-8 py-4 rounded-xl hover:bg-gray-800 hover:scale-105 transition-all duration-200"
+          className="relative bg-black text-white text-base font-semibold px-8 py-4 rounded-xl shadow-lg shadow-black/10 hover:shadow-xl hover:shadow-black/20 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-200 animate-fade-in-up"
+          style={{ animationDelay: "300ms", animationFillMode: "backwards" }}
         >
           Get Started — It's Free
         </Link>
@@ -42,10 +58,14 @@ export default function LandingPage() {
       {/* Features Row */}
       <section className="border-t border-gray-100 px-6 md:px-8 py-10">
         <div className="max-w-4xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
-          <div className="p-6 rounded-2xl border border-gray-100 hover:border-gray-300 hover:shadow-sm transition-all duration-200">
+          <div className="group p-6 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-lg hover:shadow-gray-100 hover:-translate-y-1 transition-all duration-300">
             <div className="flex justify-center mb-3">
-              <div className="bg-gray-50 p-3 rounded-xl">
-                <Share2 size={22} className="text-black" />
+              <div className="bg-gray-50 p-3 rounded-xl group-hover:bg-black group-hover:scale-110 transition-all duration-300">
+                {" "}
+                <Share2
+                  size={22}
+                  className="text-black group-hover:text-white transition-colors duration-300"
+                />
               </div>
             </div>
             <h3 className="font-bold text-black mb-1">Share Anything</h3>
@@ -53,10 +73,15 @@ export default function LandingPage() {
               PDFs, images, audio, docs, URLs — all in one group chat.
             </p>
           </div>
-          <div className="p-6 rounded-2xl border border-gray-100 hover:border-gray-300 hover:shadow-sm transition-all duration-200">
+          <div className="group p-6 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-lg hover:shadow-gray-100 hover:-translate-y-1 transition-all duration-300">
+            {" "}
             <div className="flex justify-center mb-3">
-              <div className="bg-gray-50 p-3 rounded-xl">
-                <Zap size={22} className="text-black" />
+              <div className="bg-gray-50 p-3 rounded-xl group-hover:bg-black group-hover:scale-110 transition-all duration-300">
+                {" "}
+                <Zap
+                  size={22}
+                  className="text-black group-hover:text-white transition-colors duration-300"
+                />
               </div>
             </div>
             <h3 className="font-bold text-black mb-1">Real-Time</h3>
@@ -64,10 +89,15 @@ export default function LandingPage() {
               Messages and files appear instantly for everyone in the group.
             </p>
           </div>
-          <div className="p-6 rounded-2xl border border-gray-100 hover:border-gray-300 hover:shadow-sm transition-all duration-200">
+          <div className="group p-6 rounded-2xl border border-gray-100 hover:border-gray-200 hover:shadow-lg hover:shadow-gray-100 hover:-translate-y-1 transition-all duration-300">
+            {" "}
             <div className="flex justify-center mb-3">
-              <div className="bg-gray-50 p-3 rounded-xl">
-                <Bot size={22} className="text-black" />
+              <div className="bg-gray-50 p-3 rounded-xl group-hover:bg-black group-hover:scale-110 transition-all duration-300">
+                {" "}
+                <Bot
+                  size={22}
+                  className="text-black group-hover:text-white transition-colors duration-300"
+                />
               </div>
             </div>
             <h3 className="font-bold text-black mb-1">AI Assistant</h3>

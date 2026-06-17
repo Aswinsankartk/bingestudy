@@ -209,10 +209,14 @@ export default function Dashboard() {
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {groups.map((membership) => (
+            {groups.map((membership, index) => (
               <div
                 key={membership.groups.id}
-                className="border border-gray-200 rounded-2xl p-6 hover:border-gray-400 hover:shadow-sm transition-all duration-200 relative group"
+                className="border border-gray-200 rounded-2xl p-6 hover:border-gray-400 hover:shadow-md hover:-translate-y-0.5 transition-all duration-200 relative group animate-fade-in-up"
+                style={{
+                  animationDelay: `${Math.min(index * 60, 300)}ms`,
+                  animationFillMode: "backwards",
+                }}
               >
                 <div
                   onClick={() => router.push(`/group/${membership.groups.id}`)}

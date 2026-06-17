@@ -573,39 +573,51 @@ export default function GroupRoom() {
       <div className="flex border-b border-gray-100 px-4 md:px-6 shrink-0">
         <button
           onClick={() => setActiveTab("chat")}
-          className={`flex items-center gap-1.5 py-2.5 px-3 text-sm font-semibold border-b-2 transition-all ${
+          className={`flex items-center gap-1.5 py-2.5 px-3 text-sm font-semibold border-b-2 transition-all duration-200 ${
             activeTab === "chat"
               ? "border-black text-black"
-              : "border-transparent text-gray-400 hover:text-black"
+              : "border-transparent text-gray-400 hover:text-black hover:border-gray-200"
           }`}
         >
-          <MessageCircle size={15} /> Chat
+          <MessageCircle
+            size={15}
+            className={`transition-transform duration-200 ${activeTab === "chat" ? "scale-110" : ""}`}
+          />
+          Chat
         </button>
         <button
           onClick={() => {
             setActiveTab("media");
             fetchMedia();
           }}
-          className={`flex items-center gap-1.5 py-2.5 px-3 text-sm font-semibold border-b-2 transition-all ${
+          className={`flex items-center gap-1.5 py-2.5 px-3 text-sm font-semibold border-b-2 transition-all duration-200 ${
             activeTab === "media"
               ? "border-black text-black"
-              : "border-transparent text-gray-400 hover:text-black"
+              : "border-transparent text-gray-400 hover:text-black hover:border-gray-200"
           }`}
         >
-          <FolderOpen size={15} /> Media
+          <FolderOpen
+            size={15}
+            className={`transition-transform duration-200 ${activeTab === "media" ? "scale-110" : ""}`}
+          />
+          Media
         </button>
         <button
           onClick={() => {
             setActiveTab("ai");
             fetchAiHistory();
           }}
-          className={`flex items-center gap-1.5 py-2.5 px-3 text-sm font-semibold border-b-2 transition-all ${
+          className={`flex items-center gap-1.5 py-2.5 px-3 text-sm font-semibold border-b-2 transition-all duration-200 ${
             activeTab === "ai"
               ? "border-black text-black"
-              : "border-transparent text-gray-400 hover:text-black"
+              : "border-transparent text-gray-400 hover:text-black hover:border-gray-200"
           }`}
         >
-          <Bot size={15} /> AI Assistant
+          <Bot
+            size={15}
+            className={`transition-transform duration-200 ${activeTab === "ai" ? "scale-110" : ""}`}
+          />
+          AI Assistant
         </button>
       </div>
 
@@ -630,9 +642,10 @@ export default function GroupRoom() {
                 </p>
               </div>
             ) : (
-              messages.map((msg) => {
+              messages.map((msg, index) => {
                 const isMe = msg.sender_id === user?.id;
                 const canDelete = isMe || myRole === "admin";
+                const isLastMessage = index === messages.length - 1;
                 const senderName =
                   msg.profiles?.full_name || msg.profiles?.email || "Unknown";
                 const senderAvatar = msg.profiles?.avatar_url;
@@ -641,7 +654,7 @@ export default function GroupRoom() {
                 return (
                   <div
                     key={msg.id}
-                    className={`flex flex-col ${isMe ? "items-end" : "items-start"}`}
+                    className={`flex flex-col ${isMe ? "items-end" : "items-start"} ${isLastMessage ? "animate-fade-in-up" : ""}`}
                   >
                     {/* Sender name — only show for others' messages */}
                     {!isMe && (
@@ -1107,10 +1120,20 @@ export default function GroupRoom() {
               ))
             )}
             {aiLoading && (
-              <div className="flex items-start">
-                <div className="bg-gray-100 text-black px-4 py-3 rounded-2xl rounded-bl-sm text-sm flex items-center gap-2">
-                  <div className="w-3 h-3 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
-                  Thinking...
+              <div className="flex items-start animate-fade-in-up">
+                <div className="bg-gray-100 px-4 py-3.5 rounded-2xl rounded-bl-sm flex items-center gap-1.5">
+                  <div
+                    className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-typing-dot"
+                    style={{ animationDelay: "0ms" }}
+                  />
+                  <div
+                    className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-typing-dot"
+                    style={{ animationDelay: "160ms" }}
+                  />
+                  <div
+                    className="w-1.5 h-1.5 bg-gray-400 rounded-full animate-typing-dot"
+                    style={{ animationDelay: "320ms" }}
+                  />
                 </div>
               </div>
             )}
