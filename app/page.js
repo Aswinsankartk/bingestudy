@@ -522,24 +522,26 @@ function Avatar({ initial }) {
 
 function LaptopMockup() {
   return (
-    <div className="relative max-w-lg mx-auto">
+    <div className="relative w-full max-w-lg mx-auto px-2 sm:px-0">
       {/* Laptop body */}
-      <div className="bg-[#1a1a1a] rounded-t-2xl p-3 shadow-2xl">
-        <div className="bg-white rounded-lg overflow-hidden">
+      <div className="bg-[#1a1a1a] rounded-t-xl sm:rounded-t-2xl p-2 sm:p-3 shadow-2xl">
+        <div className="bg-white rounded-md sm:rounded-lg overflow-hidden">
           {/* Browser-ish top bar */}
-          <div className="flex items-center gap-2 px-3 py-2 bg-gray-50 border-b border-gray-100">
-            <div className="flex gap-1.5">
-              <div className="w-2 h-2 rounded-full bg-gray-300" />
-              <div className="w-2 h-2 rounded-full bg-gray-300" />
-              <div className="w-2 h-2 rounded-full bg-gray-300" />
+          <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-gray-50 border-b border-gray-100">
+            <div className="flex gap-1 sm:gap-1.5">
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gray-300" />
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gray-300" />
+              <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gray-300" />
             </div>
-            <span className="text-[10px] text-gray-400 ml-2">BingeStudy</span>
+            <span className="text-[8px] sm:text-[10px] text-gray-400 ml-1 sm:ml-2">
+              BingeStudy
+            </span>
           </div>
 
-          <div className="flex h-56">
-            {/* Sidebar */}
-            <div className="w-1/3 border-r border-gray-100 p-2 hidden sm:block">
-              <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wide px-1 mb-1.5">
+          <div className="flex h-44 sm:h-56 overflow-hidden">
+            {/* Sidebar — hidden on very small screens */}
+            <div className="w-1/3 border-r border-gray-100 p-2 hidden sm:block overflow-hidden">
+              <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wide px-1 mb-1.5 truncate">
                 Study Groups
               </p>
               {[
@@ -563,86 +565,85 @@ function LaptopMockup() {
             </div>
 
             {/* Chat */}
-            <div className="flex-1 flex flex-col">
-              <div className="px-3 py-2 border-b border-gray-100">
-                <p className="text-[10px] font-bold text-black">
+            <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
+              <div className="px-2.5 sm:px-3 py-1.5 sm:py-2 border-b border-gray-100 shrink-0">
+                <p className="text-[9px] sm:text-[10px] font-bold text-black truncate">
                   DBMS Study Group
                 </p>
-                <p className="text-[8px] text-gray-400">12 members online</p>
+                <p className="text-[7px] sm:text-[8px] text-gray-400">
+                  12 members online
+                </p>
               </div>
-              <div className="flex-1 p-2.5 flex flex-col gap-1.5 text-[9px]">
-                <div className="flex flex-col items-start">
-                  <span className="text-gray-400 text-[8px] mb-0.5">
+              <div className="flex-1 p-2 sm:p-2.5 flex flex-col gap-1.5 text-[8px] sm:text-[9px] overflow-hidden min-w-0">
+                <div className="flex flex-col items-start min-w-0">
+                  <span className="text-gray-400 text-[7px] sm:text-[8px] mb-0.5">
                     Aswin · 10:30 AM
                   </span>
-                  <div className="bg-gray-100 rounded-lg px-2 py-1.5 max-w-[80%]">
+                  <div className="bg-gray-100 rounded-lg px-2 py-1.5 max-w-[85%] break-words">
                     Can someone explain normalization?
                   </div>
                 </div>
-                <div className="flex flex-col items-start">
-                  <span className="text-gray-400 text-[8px] mb-0.5">
+                <div className="flex flex-col items-start min-w-0">
+                  <span className="text-gray-400 text-[7px] sm:text-[8px] mb-0.5">
                     Abinav · 10:31 AM
                   </span>
-                  <div className="bg-gray-100 rounded-lg px-2 py-1.5 max-w-[80%]">
+                  <div className="bg-gray-100 rounded-lg px-2 py-1.5 max-w-[85%] break-words">
                     Sure! Here are my notes
-                    <div className="mt-1 bg-white border border-gray-200 rounded-md px-1.5 py-1 flex items-center gap-1">
-                      <FileText size={9} />
-                      <span className="text-[8px]">
-                        Normalization_Notes.pdf · 2.4 MB
+                    <div className="mt-1 bg-white border border-gray-200 rounded-md px-1.5 py-1 flex items-center gap-1 min-w-0">
+                      <FileText size={9} className="shrink-0" />
+                      <span className="text-[7px] sm:text-[8px] truncate">
+                        Normalization_Notes.pdf
                       </span>
                     </div>
                   </div>
                 </div>
-                <div className="flex flex-col items-end">
-                  <div className="bg-black text-white rounded-lg px-2 py-1.5 max-w-[80%]">
+                <div className="flex flex-col items-end min-w-0">
+                  <div className="bg-black text-white rounded-lg px-2 py-1.5 max-w-[85%] break-words">
                     This example helped a lot!
                   </div>
                 </div>
               </div>
-              <div className="px-2 py-1.5 border-t border-gray-100 flex items-center gap-1">
-                <div className="flex-1 bg-gray-50 rounded-full px-2 py-1 text-[8px] text-gray-400">
+              <div className="px-2 py-1.5 border-t border-gray-100 flex items-center gap-1 shrink-0">
+                <div className="flex-1 bg-gray-50 rounded-full px-2 py-1 text-[7px] sm:text-[8px] text-gray-400 truncate">
                   Message the group...
                 </div>
-                <div className="w-4 h-4 bg-black rounded-full flex items-center justify-center">
+                <div className="w-4 h-4 bg-black rounded-full flex items-center justify-center shrink-0">
                   <Send size={7} className="text-white" />
                 </div>
               </div>
             </div>
 
-            {/* AI panel */}
-            <div className="w-1/3 border-l border-gray-100 p-2 hidden md:flex flex-col">
+            {/* AI panel — hidden until md */}
+            <div className="w-1/3 border-l border-gray-100 p-2 hidden md:flex flex-col overflow-hidden min-w-0">
               <p className="text-[9px] font-bold text-black flex items-center gap-1 mb-1">
-                <Sparkles size={9} /> AI Assistant
+                <Sparkles size={9} className="shrink-0" /> AI Assistant
               </p>
-              <p className="text-[8px] text-gray-400 mb-2">
+              <p className="text-[8px] text-gray-400 mb-2 line-clamp-2">
                 Ask anything about your subjects or doubts.
               </p>
-              <div className="bg-gray-50 rounded-md px-1.5 py-1 text-[8px] text-gray-500 mb-1.5">
+              <div className="bg-gray-50 rounded-md px-1.5 py-1 text-[8px] text-gray-500 mb-1.5 truncate">
                 What is DBSCAN?
               </div>
-              <div className="bg-black text-white rounded-md px-1.5 py-1.5 text-[7px] leading-snug">
-                DBSCAN is a density-based clustering algorithm that groups
-                together points that are closely packed together, marking points
-                that lie alone in low-density regions as outliers.
-                <div className="mt-1 text-[7px] text-gray-400">
-                  It requires two parameters:
-                  <br />· eps (neighborhood radius)
-                  <br />· minPts (minimum points)
-                </div>
+              <div className="bg-black text-white rounded-md px-1.5 py-1.5 text-[7px] leading-snug overflow-hidden">
+                <p className="line-clamp-4">
+                  DBSCAN is a density-based clustering algorithm that groups
+                  together points that are closely packed together, marking
+                  points that lie alone in low-density regions as outliers.
+                </p>
               </div>
-              <div className="mt-auto flex items-center gap-1 bg-gray-50 rounded-full px-2 py-1">
-                <span className="text-[7px] text-gray-400 flex-1">
+              <div className="mt-auto flex items-center gap-1 bg-gray-50 rounded-full px-2 py-1 min-w-0">
+                <span className="text-[7px] text-gray-400 flex-1 truncate">
                   Ask a question...
                 </span>
-                <Send size={8} className="text-gray-400" />
+                <Send size={8} className="text-gray-400 shrink-0" />
               </div>
             </div>
           </div>
         </div>
       </div>
       {/* Laptop base */}
-      <div className="h-3 bg-[#2a2a2a] rounded-b-xl mx-2" />
-      <div className="h-1.5 bg-[#1a1a1a] rounded-full mx-12 -mt-0.5" />
+      <div className="h-2 sm:h-3 bg-[#2a2a2a] rounded-b-lg sm:rounded-b-xl mx-1 sm:mx-2" />
+      <div className="h-1 sm:h-1.5 bg-[#1a1a1a] rounded-full mx-8 sm:mx-12 -mt-0.5" />
     </div>
   );
 }
