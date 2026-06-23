@@ -11,6 +11,7 @@ import {
   Sparkles,
   Send,
 } from "lucide-react";
+import Reveal from "@/components/Reveal";
 
 export default function LandingPage() {
   return (
@@ -33,7 +34,7 @@ export default function LandingPage() {
       {/* ============ HERO ============ */}
       <section className="relative px-6 md:px-10 pt-16 pb-20 overflow-hidden">
         <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_70%_60%_at_70%_20%,#000_40%,transparent_100%)] pointer-events-none" />
-
+        <div className="absolute top-10 right-10 w-72 h-72 bg-gray-100 rounded-full blur-3xl opacity-50 animate-drift pointer-events-none" />
         <div className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
           {/* Left: headline */}
           <div>
@@ -98,8 +99,9 @@ export default function LandingPage() {
           >
             <svg
               viewBox="0 0 400 400"
-              className="absolute inset-0 w-full h-full"
+              className="absolute inset-0 w-full h-full animate-spin-slow"
               fill="none"
+              style={{ transformOrigin: "center" }}
             >
               <circle
                 cx="200"
@@ -117,10 +119,37 @@ export default function LandingPage() {
                 strokeDasharray="3 6"
                 strokeWidth="1.5"
               />
-              <circle cx="365" cy="60" r="2" fill="#D4D4D4" />
-              <circle cx="40" cy="120" r="2" fill="#D4D4D4" />
-              <circle cx="370" cy="300" r="2" fill="#D4D4D4" />
-              <circle cx="60" cy="330" r="2" fill="#D4D4D4" />
+              <circle
+                cx="365"
+                cy="60"
+                r="2"
+                fill="#D4D4D4"
+                className="animate-pulse-soft"
+              />
+              <circle
+                cx="40"
+                cy="120"
+                r="2"
+                fill="#D4D4D4"
+                className="animate-pulse-soft"
+                style={{ animationDelay: "1s" }}
+              />
+              <circle
+                cx="370"
+                cy="300"
+                r="2"
+                fill="#D4D4D4"
+                className="animate-pulse-soft"
+                style={{ animationDelay: "0.5s" }}
+              />
+              <circle
+                cx="60"
+                cy="330"
+                r="2"
+                fill="#D4D4D4"
+                className="animate-pulse-soft"
+                style={{ animationDelay: "1.5s" }}
+              />
             </svg>
 
             {/* Center node */}
@@ -164,92 +193,96 @@ export default function LandingPage() {
       </section>
 
       {/* ============ PROBLEM / SOLUTION SPLIT ============ */}
-      <section className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
-        <div className="px-6 md:px-10 py-14 flex flex-col justify-center">
-          <h2 className="text-2xl md:text-3xl font-black text-black leading-tight mb-3">
-            Students waste hours switching between apps.
-          </h2>
-          <p className="text-gray-400 text-sm">
-            Too many tabs. Too many tools.
-            <br />
-            Not enough time to actually study.
-          </p>
-        </div>
-
-        <div className="bg-black px-6 md:px-10 py-14 flex flex-col justify-center">
-          <div className="flex items-center gap-3 mb-6 flex-wrap">
-            <AppIcon label="Notes">
-              <FileText size={20} />
-            </AppIcon>
-            <AppIcon label="WhatsApp">
-              <WhatsAppIcon />
-            </AppIcon>
-            <AppIcon label="Drive">
-              <DriveIcon />
-            </AppIcon>
-            <AppIcon label="Telegram">
-              <TelegramIcon />
-            </AppIcon>
-            <AppIcon label="ChatGPT">
-              <Bot size={20} />
-            </AppIcon>
-            <ArrowRight size={20} className="text-gray-500 mx-1 shrink-0" />
+      <Reveal>
+        <section className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
+          <div className="px-6 md:px-10 py-14 flex flex-col justify-center">
+            <h2 className="text-2xl md:text-3xl font-black text-black leading-tight mb-3">
+              Students waste hours switching between apps.
+            </h2>
+            <p className="text-gray-400 text-sm">
+              Too many tabs. Too many tools.
+              <br />
+              Not enough time to actually study.
+            </p>
           </div>
-          <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
-            BingeStudy combines
-            <br />
-            <span className="text-lime-300">everything.</span>
-          </h3>
-        </div>
-      </section>
+
+          <div className="bg-black px-6 md:px-10 py-14 flex flex-col justify-center">
+            <div className="flex items-center gap-3 mb-6 flex-wrap">
+              <AppIcon label="Notes">
+                <FileText size={20} />
+              </AppIcon>
+              <AppIcon label="WhatsApp">
+                <WhatsAppIcon />
+              </AppIcon>
+              <AppIcon label="Drive">
+                <DriveIcon />
+              </AppIcon>
+              <AppIcon label="Telegram">
+                <TelegramIcon />
+              </AppIcon>
+              <AppIcon label="ChatGPT">
+                <Bot size={20} />
+              </AppIcon>
+              <ArrowRight size={20} className="text-gray-500 mx-1 shrink-0" />
+            </div>
+            <h3 className="text-2xl md:text-3xl font-black text-white leading-tight">
+              BingeStudy combines
+              <br />
+              <span className="text-lime-300">everything.</span>
+            </h3>
+          </div>
+        </section>
+      </Reveal>
 
       {/* ============ PRODUCT SHOWCASE ============ */}
-      <section
-        id="features"
-        className="px-6 md:px-10 py-20 border-t border-gray-100"
-      >
-        <div className="max-w-6xl mx-auto">
-          <div className="grid grid-cols-1 lg:grid-cols-[0.7fr_1.6fr_0.7fr] gap-8 items-center">
-            {/* Left annotations */}
-            <div className="flex flex-col gap-10 lg:text-right order-2 lg:order-1">
-              <Annotation
-                number="01"
-                title="Share Notes"
-                description="Upload PDFs, images, audio, docs and links instantly."
-                align="right"
-              />
-              <Annotation
-                number="02"
-                title="Real-Time Chat"
-                description="Discuss, ask, and learn together in real time."
-                align="right"
-              />
-            </div>
+      <Reveal>
+        <section
+          id="features"
+          className="px-6 md:px-10 py-20 border-t border-gray-100"
+        >
+          <div className="max-w-6xl mx-auto">
+            <div className="grid grid-cols-1 lg:grid-cols-[0.7fr_1.6fr_0.7fr] gap-8 items-center">
+              {/* Left annotations */}
+              <div className="flex flex-col gap-10 lg:text-right order-2 lg:order-1">
+                <Annotation
+                  number="01"
+                  title="Share Notes"
+                  description="Upload PDFs, images, audio, docs and links instantly."
+                  align="right"
+                />
+                <Annotation
+                  number="02"
+                  title="Real-Time Chat"
+                  description="Discuss, ask, and learn together in real time."
+                  align="right"
+                />
+              </div>
 
-            {/* Laptop mockup */}
-            <div className="order-1 lg:order-2 animate-fade-in-up">
-              <LaptopMockup />
-            </div>
+              {/* Laptop mockup */}
+              <div className="order-1 lg:order-2 animate-fade-in-up transition-transform duration-500 hover:[transform:perspective(1000px)_rotateX(2deg)_rotateY(-2deg)_scale(1.02)]">
+                <LaptopMockup />
+              </div>
 
-            {/* Right annotation */}
-            <div className="flex flex-col gap-10 order-3">
-              <Annotation
-                number="03"
-                title="AI Assistant"
-                description="Ask doubts. Get instant answers powered by Gemini."
-                align="left"
-              />
-              <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 border border-gray-200 rounded-full px-4 py-2 w-fit">
-                <Sparkles size={13} /> Powered by Gemini
+              {/* Right annotation */}
+              <div className="flex flex-col gap-10 order-3">
+                <Annotation
+                  number="03"
+                  title="AI Assistant"
+                  description="Ask doubts. Get instant answers powered by Gemini."
+                  align="left"
+                />
+                <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 border border-gray-200 rounded-full px-4 py-2 w-fit">
+                  <Sparkles size={13} /> Powered by Gemini
+                </div>
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </Reveal>
 
       {/* ============ MARQUEE STRIP ============ */}
-      <div className="bg-black overflow-hidden py-4 border-y border-gray-900">
-        <div className="flex w-max animate-marquee whitespace-nowrap">
+      <div className="bg-black overflow-hidden py-4 border-y border-gray-900 group">
+        <div className="flex w-max animate-marquee whitespace-nowrap group-hover:[animation-play-state:paused] transition-all">
           {Array(2)
             .fill(0)
             .map((_, i) => (
@@ -281,24 +314,30 @@ export default function LandingPage() {
 
       {/* ============ STATS ROW ============ */}
       <section className="grid grid-cols-1 md:grid-cols-3 border-b border-gray-100">
-        <Stat
-          number="01"
-          label="Platform"
-          description="All your study needs. One place."
-        />
-        <Stat
-          number="04+"
-          label="Content Types"
-          description="PDFs, audio, docs, links, and more."
-          divider
-        />
-        <Stat
-          number="∞"
-          label="Possibilities"
-          description="Learn, collaborate, achieve together."
-          divider
-          isInfinity
-        />
+        <Reveal>
+          <Stat
+            number="01"
+            label="Platform"
+            description="All your study needs. One place."
+          />
+        </Reveal>
+        <Reveal>
+          <Stat
+            number="04+"
+            label="Content Types"
+            description="PDFs, audio, docs, links, and more."
+            divider
+          />
+        </Reveal>
+        <Reveal>
+          <Stat
+            number="∞"
+            label="Possibilities"
+            description="Learn, collaborate, achieve together."
+            divider
+            isInfinity
+          />
+        </Reveal>
       </section>
 
       {/* ============ ASK ANYTHING (dark AI demo) ============ */}
@@ -345,36 +384,48 @@ export default function LandingPage() {
       <section className="px-6 md:px-10 py-16 border-b border-gray-100">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <FeatureCard
-              icon={<Sparkles size={18} />}
-              title="AI Assistant"
-              description="Instant answers to any academic doubt."
-            />
-            <FeatureCard
-              icon={<MessageCircle size={18} />}
-              title="Real-Time Collaboration"
-              description="Chat, discuss and solve together."
-            />
-            <FeatureCard
-              icon={<Users size={18} />}
-              title="Private Groups"
-              description="Learn in a focused, distraction-free space."
-            />
-            <FeatureCard
-              icon={<Mic size={18} />}
-              title="Audio Support"
-              description="Share and listen to audio files easily."
-            />
-            <FeatureCard
-              icon={<FileText size={18} />}
-              title="PDFs & Docs"
-              description="Upload and organize all your study materials."
-            />
-            <FeatureCard
-              icon={<Link2 size={18} />}
-              title="Links & URLs"
-              description="Share important links and resources."
-            />
+            <Reveal delay={0}>
+              <FeatureCard
+                icon={<Sparkles size={18} />}
+                title="AI Assistant"
+                description="Instant answers to any academic doubt."
+              />
+            </Reveal>
+            <Reveal delay={60}>
+              <FeatureCard
+                icon={<MessageCircle size={18} />}
+                title="Real-Time Collaboration"
+                description="Chat, discuss and solve together."
+              />
+            </Reveal>
+            <Reveal delay={120}>
+              <FeatureCard
+                icon={<Users size={18} />}
+                title="Private Groups"
+                description="Learn in a focused, distraction-free space."
+              />
+            </Reveal>
+            <Reveal delay={180}>
+              <FeatureCard
+                icon={<Mic size={18} />}
+                title="Audio Support"
+                description="Share and listen to audio files easily."
+              />
+            </Reveal>
+            <Reveal delay={240}>
+              <FeatureCard
+                icon={<FileText size={18} />}
+                title="PDFs & Docs"
+                description="Upload and organize all your study materials."
+              />
+            </Reveal>
+            <Reveal delay={300}>
+              <FeatureCard
+                icon={<Link2 size={18} />}
+                title="Links & URLs"
+                description="Share important links and resources."
+              />
+            </Reveal>
           </div>
 
           <div className="bg-black rounded-2xl p-7 flex flex-col justify-between">
@@ -414,9 +465,12 @@ export default function LandingPage() {
           <div className="flex flex-col items-start md:items-end gap-2 shrink-0">
             <Link
               href="/login"
-              className="bg-lime-300 text-black font-bold px-8 py-4 rounded-full flex items-center gap-2 hover:bg-lime-200 active:scale-[0.97] transition-all duration-200 shadow-lg shadow-lime-300/30"
+              className="relative bg-lime-300 text-black font-bold px-8 py-4 rounded-full flex items-center gap-2 hover:bg-lime-200 active:scale-[0.97] transition-all duration-200 shadow-lg shadow-lime-300/30"
             >
-              GET STARTED <ArrowUpRight size={18} />
+              <span className="absolute inset-0 rounded-full bg-lime-300 animate-pulse-ring" />
+              <span className="relative flex items-center gap-2">
+                GET STARTED <ArrowUpRight size={18} />
+              </span>
             </Link>
             <span className="text-xs text-gray-400">It's free. Forever.</span>
           </div>
