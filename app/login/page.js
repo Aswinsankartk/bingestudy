@@ -58,12 +58,27 @@ export default function LoginPage() {
     <main className="relative min-h-screen bg-white flex flex-col items-center justify-center px-4 overflow-hidden">
       {/* Background texture — dot grid + ambient glow */}
       <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_70%_60%_at_50%_40%,#000_40%,transparent_100%)] pointer-events-none" />
-      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-gradient-to-b from-gray-100 to-transparent rounded-full blur-3xl opacity-50 pointer-events-none" />
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[500px] bg-gradient-to-b from-gray-100 to-transparent rounded-full blur-3xl opacity-50 animate-drift pointer-events-none" />
+
+      {/* Back to home */}
+      <a
+        href="/"
+        className="absolute top-6 left-6 text-xs font-semibold text-gray-400 hover:text-black active:scale-95 transition-all duration-200"
+      >
+        ← BingeStudy
+      </a>
+
       {/* Card */}
-      <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-2xl p-8 shadow-xl shadow-gray-100/50 animate-scale-in">
+      <div className="relative w-full max-w-md bg-white border border-gray-200 rounded-3xl p-8 shadow-xl shadow-gray-100/50 animate-scale-in">
         {/* Logo */}
+        <span
+          className="block text-center text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-3 animate-fade-in-up"
+          style={{ animationDelay: "0ms", animationFillMode: "backwards" }}
+        >
+          For Students, By Students
+        </span>
         <h1
-          className="text-2xl font-black text-black text-center mb-1 animate-fade-in-up"
+          className="text-2xl font-black text-black text-center tracking-tight mb-1 animate-fade-in-up"
           style={{ animationDelay: "60ms", animationFillMode: "backwards" }}
         >
           BingeStudy
@@ -79,7 +94,7 @@ export default function LoginPage() {
         <button
           onClick={handleGoogleLogin}
           disabled={googleLoading}
-          className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-xl py-3 text-sm font-medium text-black hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition-all duration-200 mb-6 disabled:opacity-60 animate-fade-in-up"
+          className="w-full flex items-center justify-center gap-3 border border-gray-200 rounded-full py-3 text-sm font-semibold text-black hover:bg-gray-50 hover:border-gray-300 active:scale-[0.98] transition duration-200 ease-out mb-6 disabled:opacity-60 animate-fade-in-up"
           style={{ animationDelay: "120ms", animationFillMode: "backwards" }}
         >
           {googleLoading ? (
@@ -129,7 +144,7 @@ export default function LoginPage() {
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
-            className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-black focus:shadow-sm transition-all duration-200"
+            className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-black focus:shadow-sm transition duration-200 ease-out"
           />
           <input
             type="password"
@@ -137,7 +152,7 @@ export default function LoginPage() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
-            className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-black focus:shadow-sm transition-all duration-200"
+            className="border border-gray-200 rounded-xl px-4 py-3 text-sm text-black placeholder-gray-400 focus:outline-none focus:border-black focus:shadow-sm transition duration-200 ease-out"
           />
 
           {/* Error / Success Message */}
@@ -150,7 +165,7 @@ export default function LoginPage() {
           <button
             type="submit"
             disabled={loading}
-            className="bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 active:scale-[0.98] transition-all duration-200 disabled:opacity-50 disabled:active:scale-100"
+            className="bg-black text-white rounded-full py-3 text-sm font-semibold shadow-lg shadow-black/10 hover:bg-gray-800 hover:shadow-xl hover:shadow-black/20 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.98] transition duration-200 ease-out disabled:opacity-50 disabled:hover:translate-y-0 disabled:hover:shadow-lg disabled:active:scale-100"
           >
             {loading ? "Please wait..." : isSignUp ? "Create Account" : "Login"}
           </button>
