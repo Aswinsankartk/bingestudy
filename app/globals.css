@@ -132,9 +132,13 @@
   -webkit-tap-highlight-color: transparent;
 }
 
-button {
-  transition-property:
-    transform, background-color, border-color, color, box-shadow, opacity;
+@layer utilities {
+  button {
+    transition-property:
+      transform, background-color, border-color, color, box-shadow, opacity !important;
+    transition-duration: 200ms !important;
+    transition-timing-function: cubic-bezier(0.16, 1, 0.3, 1) !important;
+  }
 }
 
 @theme inline {

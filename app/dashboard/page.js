@@ -125,21 +125,26 @@ export default function Dashboard() {
   if (!user) return null;
 
   return (
-    <main className="min-h-screen bg-white">
+    <main className="relative min-h-screen bg-white">
+      {/* Ambient background texture */}
+      <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_30%,transparent_100%)] pointer-events-none" />
+
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-6 md:px-8 py-4 border-b border-gray-100">
-        <span className="text-xl font-black text-black">BingeStudy</span>
-        <div className="flex items-center gap-3">
+      <nav className="relative flex items-center justify-between px-6 md:px-8 py-4 border-b border-gray-100 bg-white/80 backdrop-blur-sm">
+        <span className="text-xl font-black tracking-tight text-black">
+          BingeStudy
+        </span>
+        <div className="flex items-center gap-4">
           <button
             onClick={() => router.push("/profile")}
-            className="text-sm font-medium text-gray-500 hover:text-black transition-all duration-200"
+            className="text-sm font-semibold text-gray-500 hover:text-black active:scale-95 transition-all duration-200"
           >
             Profile
           </button>
           <button
             onClick={handleLogout}
             disabled={logoutLoading}
-            className="flex items-center gap-2 text-sm font-medium text-gray-500 hover:text-black transition-all duration-200 disabled:opacity-50"
+            className="flex items-center gap-2 text-sm font-semibold text-gray-500 hover:text-black active:scale-95 transition-all duration-200 disabled:opacity-50"
           >
             {logoutLoading ? (
               <div className="w-4 h-4 border-2 border-gray-400 border-t-transparent rounded-full animate-spin" />
@@ -154,10 +159,16 @@ export default function Dashboard() {
       </nav>
 
       {/* Content */}
-      <div className="max-w-4xl mx-auto px-6 md:px-8 py-10">
-        <div className="flex items-center justify-between mb-8">
+      <div className="relative max-w-4xl mx-auto px-6 md:px-8 py-10">
+        <div
+          className="flex items-center justify-between mb-8 animate-fade-in-up"
+          style={{ animationFillMode: "backwards" }}
+        >
           <div>
-            <h2 className="text-2xl md:text-3xl font-black text-black mb-1">
+            <span className="text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-2 block">
+              Dashboard
+            </span>
+            <h2 className="text-3xl md:text-4xl font-black text-black tracking-tight mb-1">
               Your Groups
             </h2>
             <p className="text-gray-400 text-sm">
@@ -167,17 +178,20 @@ export default function Dashboard() {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex gap-3 mb-10">
+        <div
+          className="flex gap-3 mb-10 animate-fade-in-up"
+          style={{ animationDelay: "80ms", animationFillMode: "backwards" }}
+        >
           <button
             onClick={() => setShowCreate(true)}
-            className="flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-gray-800 hover:scale-105 transition-all duration-200"
+            className="flex items-center gap-2 bg-black text-white px-5 py-2.5 rounded-full text-sm font-semibold shadow-lg shadow-black/10 transition duration-200 ease-out hover:shadow-xl hover:shadow-black/20 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97]"
           >
             <Plus size={16} />
             Create Group
           </button>
           <button
             onClick={() => setShowJoin(true)}
-            className="flex items-center gap-2 border border-black text-black px-5 py-2.5 rounded-xl text-sm font-semibold hover:bg-black hover:text-white transition-all duration-200"
+            className="flex items-center gap-2 border border-gray-200 text-black px-5 py-2.5 rounded-full text-sm font-semibold hover:border-black active:scale-[0.97] transition-all duration-200"
           >
             <UserPlus size={16} />
             Join Group
@@ -188,21 +202,18 @@ export default function Dashboard() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div
-                key={i}
-                className="border border-gray-100 rounded-2xl p-6 animate-pulse"
-              >
-                <div className="h-4 bg-gray-100 rounded mb-3 w-3/4" />
-                <div className="h-3 bg-gray-100 rounded w-1/2" />
+              <div key={i} className="border border-gray-100 rounded-2xl p-6">
+                <div className="h-4 rounded mb-3 w-3/4 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 bg-[length:200%_100%] animate-shimmer" />
+                <div className="h-3 rounded w-1/2 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 bg-[length:200%_100%] animate-shimmer" />
               </div>
             ))}
           </div>
         ) : groups.length === 0 ? (
-          <div className="flex flex-col items-center justify-center text-center py-20 border border-dashed border-gray-200 rounded-2xl">
-            <div className="bg-gray-50 p-4 rounded-2xl mb-4">
+          <div className="flex flex-col items-center justify-center text-center py-20 border border-dashed border-gray-200 rounded-2xl animate-fade-in">
+            <div className="bg-gray-50 p-4 rounded-2xl mb-4 animate-float">
               <BookOpen size={32} className="text-gray-300" />
             </div>
-            <p className="text-gray-500 text-sm font-medium">No groups yet</p>
+            <p className="text-gray-500 text-sm font-semibold">No groups yet</p>
             <p className="text-gray-300 text-sm mt-1">
               Create one or ask a friend for their invite code.
             </p>
@@ -227,7 +238,7 @@ export default function Dashboard() {
                       {membership.groups.name}
                     </h3>
                     <span
-                      className={`text-xs font-semibold px-2 py-0.5 rounded-md ml-2 shrink-0 ${
+                      className={`text-xs font-semibold px-2.5 py-0.5 rounded-full ml-2 shrink-0 ${
                         membership.role === "admin"
                           ? "bg-black text-white"
                           : "bg-gray-100 text-gray-500"
@@ -258,7 +269,7 @@ export default function Dashboard() {
                       )
                     }
                     disabled={deletingGroupId === membership.groups.id}
-                    className="absolute top-4 right-4 text-gray-200 hover:text-red-400 transition-all duration-200 disabled:opacity-40"
+                    className="absolute top-4 right-4 text-gray-200 hover:text-red-400 active:scale-90 transition-all duration-200 disabled:opacity-40"
                     title="Delete group"
                   >
                     {deletingGroupId === membership.groups.id ? (
@@ -277,7 +288,7 @@ export default function Dashboard() {
       {/* Create Group Modal */}
       {showCreate && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center px-4 z-50 animate-fade-in">
-          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl">
+          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl animate-scale-in">
             <h3 className="text-xl font-black text-black mb-5">
               Create a Group
             </h3>
@@ -288,17 +299,19 @@ export default function Dashboard() {
                 value={groupName}
                 onChange={(e) => setGroupName(e.target.value)}
                 required
-                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all"
+                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all duration-200"
               />
               <input
                 type="text"
                 placeholder="Subject (e.g. Database Management)"
                 value={groupSubject}
                 onChange={(e) => setGroupSubject(e.target.value)}
-                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all"
+                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all duration-200"
               />
               {createError && (
-                <p className="text-sm text-red-500">{createError}</p>
+                <p className="text-sm text-red-500 animate-fade-in-down">
+                  {createError}
+                </p>
               )}
               <div className="flex gap-3 mt-1">
                 <button
@@ -307,14 +320,14 @@ export default function Dashboard() {
                     setShowCreate(false);
                     setCreateError("");
                   }}
-                  className="flex-1 border border-gray-200 text-black rounded-xl py-3 text-sm font-semibold hover:bg-gray-50 transition-all"
+                  className="flex-1 border border-gray-200 text-black rounded-full py-3 text-sm font-semibold hover:bg-gray-50 active:scale-[0.98] transition-all duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={createLoading}
-                  className="flex-1 bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 transition-all disabled:opacity-50"
+                  className="flex-1 bg-black text-white rounded-full py-3 text-sm font-semibold hover:bg-gray-800 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
                 >
                   {createLoading ? "Creating..." : "Create"}
                 </button>
@@ -327,7 +340,7 @@ export default function Dashboard() {
       {/* Join Group Modal */}
       {showJoin && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center px-4 z-50 animate-fade-in">
-          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl">
+          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl animate-scale-in">
             <h3 className="text-xl font-black text-black mb-5">Join a Group</h3>
             <form onSubmit={handleJoinGroup} className="flex flex-col gap-4">
               <input
@@ -336,9 +349,13 @@ export default function Dashboard() {
                 value={joinCode}
                 onChange={(e) => setJoinCode(e.target.value)}
                 required
-                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all uppercase"
+                className="border border-gray-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-black transition-all duration-200 uppercase"
               />
-              {joinError && <p className="text-sm text-red-500">{joinError}</p>}
+              {joinError && (
+                <p className="text-sm text-red-500 animate-fade-in-down">
+                  {joinError}
+                </p>
+              )}
               <div className="flex gap-3 mt-1">
                 <button
                   type="button"
@@ -346,14 +363,14 @@ export default function Dashboard() {
                     setShowJoin(false);
                     setJoinError("");
                   }}
-                  className="flex-1 border border-gray-200 text-black rounded-xl py-3 text-sm font-semibold hover:bg-gray-50 transition-all"
+                  className="flex-1 border border-gray-200 text-black rounded-full py-3 text-sm font-semibold hover:bg-gray-50 active:scale-[0.98] transition-all duration-200"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
                   disabled={joinLoading}
-                  className="flex-1 bg-black text-white rounded-xl py-3 text-sm font-semibold hover:bg-gray-800 transition-all disabled:opacity-50"
+                  className="flex-1 bg-black text-white rounded-full py-3 text-sm font-semibold hover:bg-gray-800 active:scale-[0.98] transition-all duration-200 disabled:opacity-50"
                 >
                   {joinLoading ? "Joining..." : "Join"}
                 </button>
