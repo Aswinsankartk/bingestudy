@@ -12,19 +12,21 @@ import {
   Send,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-white">
+    <main className="min-h-screen bg-white dark:bg-gray-950">
       {/* ============ NAVBAR ============ */}
-      <nav className="flex items-center justify-between px-6 md:px-10 py-5 border-b border-gray-100">
-        <span className="text-xl font-black tracking-tight text-black">
+      <nav className="flex items-center justify-between px-6 md:px-10 py-5 border-b border-gray-100 dark:border-gray-800 dark:bg-gray-950">
+        <span className="text-xl font-black tracking-tight text-black dark:text-white">
           BingeStudy
         </span>
         <div className="flex items-center gap-3">
+          <ThemeToggle />
           <Link
             href="/login"
-            className="text-sm font-semibold text-black border border-gray-200 px-5 py-2 rounded-full hover:border-black transition-all duration-200"
+            className="text-sm font-semibold text-black dark:text-white border border-gray-200 dark:border-gray-700 px-5 py-2 rounded-full hover:border-black dark:hover:border-white transition-all duration-200"
           >
             Login
           </Link>
@@ -33,10 +35,9 @@ export default function LandingPage() {
 
       {/* ============ HERO ============ */}
       <section className="relative px-6 md:px-10 pt-16 pb-20 overflow-hidden">
-        <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_70%_60%_at_70%_20%,#000_40%,transparent_100%)] pointer-events-none" />
-        <div className="absolute top-10 right-10 w-72 h-72 bg-gray-100 rounded-full blur-3xl opacity-50 animate-drift pointer-events-none" />
+        <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_70%_60%_at_70%_20%,#000_40%,transparent_100%)] pointer-events-none dark:opacity-30" />
+        <div className="absolute top-10 right-10 w-72 h-72 bg-gray-100 dark:bg-gray-800 rounded-full blur-3xl opacity-50 animate-drift pointer-events-none" />
         <div className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 items-center">
-          {/* Left: headline */}
           <div>
             <span
               className="block text-xs font-bold uppercase tracking-[0.2em] text-gray-400 mb-5 animate-fade-in-up"
@@ -46,20 +47,20 @@ export default function LandingPage() {
             </span>
 
             <h1
-              className="text-[2.75rem] sm:text-6xl md:text-7xl font-black text-black leading-[0.95] tracking-tight mb-6 animate-fade-in-up"
+              className="text-[2.75rem] sm:text-6xl md:text-7xl font-black text-black dark:text-white leading-[0.95] tracking-tight mb-6 animate-fade-in-up"
               style={{ animationDelay: "80ms", animationFillMode: "backwards" }}
             >
               STUDY
               <br />
               TOGETHER.
               <br />
-              <span className="text-black">STUDY</span>
+              <span className="text-black dark:text-white">STUDY</span>
               <br />
               SMARTER.
             </h1>
 
             <p
-              className="text-gray-500 text-base md:text-lg max-w-md mb-8 animate-fade-in-up"
+              className="text-gray-500 dark:text-gray-400 text-base md:text-lg max-w-md mb-8 animate-fade-in-up"
               style={{
                 animationDelay: "160ms",
                 animationFillMode: "backwards",
@@ -79,13 +80,13 @@ export default function LandingPage() {
             >
               <Link
                 href="/login"
-                className="bg-black text-white text-sm font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-black/10 hover:shadow-xl hover:shadow-black/20 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-200"
+                className="bg-black dark:bg-white text-white dark:text-black text-sm font-semibold px-7 py-3.5 rounded-full shadow-lg shadow-black/10 hover:shadow-xl hover:shadow-black/20 hover:-translate-y-0.5 active:translate-y-0 active:scale-[0.97] transition-all duration-200"
               >
                 Get Started — It's Free
               </Link>
               <a
                 href="#features"
-                className="flex items-center gap-1.5 text-sm font-semibold text-black hover:gap-2.5 transition-all duration-200"
+                className="flex items-center gap-1.5 text-sm font-semibold text-black dark:text-white hover:gap-2.5 transition-all duration-200"
               >
                 Learn More <ArrowRight size={15} />
               </a>
@@ -152,12 +153,10 @@ export default function LandingPage() {
               />
             </svg>
 
-            {/* Center node */}
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-black rounded-2xl flex items-center justify-center text-white font-black text-2xl shadow-xl shadow-black/20">
+            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-16 h-16 bg-black dark:bg-white rounded-2xl flex items-center justify-center text-white dark:text-black font-black text-2xl shadow-xl shadow-black/20">
               B
             </div>
 
-            {/* Orbiting nodes */}
             <OrbitNode
               icon={<FileText size={18} />}
               label="PDFs"
@@ -194,9 +193,9 @@ export default function LandingPage() {
 
       {/* ============ PROBLEM / SOLUTION SPLIT ============ */}
       <Reveal>
-        <section className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100">
-          <div className="px-6 md:px-10 py-14 flex flex-col justify-center">
-            <h2 className="text-2xl md:text-3xl font-black text-black leading-tight mb-3">
+        <section className="grid grid-cols-1 md:grid-cols-2 border-t border-gray-100 dark:border-gray-800">
+          <div className="px-6 md:px-10 py-14 flex flex-col justify-center bg-white dark:bg-gray-950">
+            <h2 className="text-2xl md:text-3xl font-black text-black dark:text-white leading-tight mb-3">
               Students waste hours switching between apps.
             </h2>
             <p className="text-gray-400 text-sm">
@@ -238,11 +237,10 @@ export default function LandingPage() {
       <Reveal>
         <section
           id="features"
-          className="px-6 md:px-10 py-20 border-t border-gray-100"
+          className="px-6 md:px-10 py-20 border-t border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950"
         >
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-[0.7fr_1.6fr_0.7fr] gap-8 items-center">
-              {/* Left annotations */}
               <div className="flex flex-col gap-10 lg:text-right order-2 lg:order-1">
                 <Annotation
                   number="01"
@@ -258,12 +256,10 @@ export default function LandingPage() {
                 />
               </div>
 
-              {/* Laptop mockup */}
               <div className="order-1 lg:order-2 animate-fade-in-up transition-transform duration-500 hover:[transform:perspective(1000px)_rotateX(2deg)_rotateY(-2deg)_scale(1.02)]">
                 <LaptopMockup />
               </div>
 
-              {/* Right annotation */}
               <div className="flex flex-col gap-10 order-3">
                 <Annotation
                   number="03"
@@ -271,7 +267,7 @@ export default function LandingPage() {
                   description="Ask doubts. Get instant answers powered by Gemini."
                   align="left"
                 />
-                <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 border border-gray-200 rounded-full px-4 py-2 w-fit">
+                <div className="flex items-center gap-2 text-xs font-semibold text-gray-400 dark:text-gray-500 border border-gray-200 dark:border-gray-700 rounded-full px-4 py-2 w-fit">
                   <Sparkles size={13} /> Powered by Gemini
                 </div>
               </div>
@@ -313,7 +309,7 @@ export default function LandingPage() {
       </div>
 
       {/* ============ STATS ROW ============ */}
-      <section className="grid grid-cols-1 md:grid-cols-3 border-b border-gray-100">
+      <section className="grid grid-cols-1 md:grid-cols-3 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950">
         <Reveal>
           <Stat
             number="01"
@@ -321,7 +317,7 @@ export default function LandingPage() {
             description="All your study needs. One place."
           />
         </Reveal>
-        <Reveal>
+        <Reveal delay={100}>
           <Stat
             number="04+"
             label="Content Types"
@@ -329,7 +325,7 @@ export default function LandingPage() {
             divider
           />
         </Reveal>
-        <Reveal>
+        <Reveal delay={200}>
           <Stat
             number="∞"
             label="Possibilities"
@@ -340,7 +336,7 @@ export default function LandingPage() {
         </Reveal>
       </section>
 
-      {/* ============ ASK ANYTHING (dark AI demo) ============ */}
+      {/* ============ ASK ANYTHING ============ */}
       <section className="relative bg-black px-6 md:px-10 py-20 overflow-hidden">
         <div className="absolute inset-0 bg-dot-grid opacity-[0.07] [mask-image:radial-gradient(circle_at_70%_50%,#000_0%,transparent_70%)] pointer-events-none" />
         <div className="relative max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -381,7 +377,7 @@ export default function LandingPage() {
       </section>
 
       {/* ============ FEATURE GRID + BUILT BY STUDENTS ============ */}
-      <section className="px-6 md:px-10 py-16 border-b border-gray-100">
+      <section className="px-6 md:px-10 py-16 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950">
         <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-6">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <Reveal delay={0}>
@@ -449,13 +445,13 @@ export default function LandingPage() {
       </section>
 
       {/* ============ FINAL CTA ============ */}
-      <section className="px-6 md:px-10 py-16 border-b border-gray-100">
+      <section className="px-6 md:px-10 py-16 border-b border-gray-100 dark:border-gray-800 bg-white dark:bg-gray-950">
         <div className="max-w-6xl mx-auto flex flex-col md:flex-row md:items-center md:justify-between gap-8">
           <div>
             <span className="text-xs font-bold uppercase tracking-widest text-gray-400 block mb-2">
               Ready?
             </span>
-            <h2 className="text-3xl md:text-5xl font-black text-black leading-tight">
+            <h2 className="text-3xl md:text-5xl font-black text-black dark:text-white leading-tight">
               STUDY TOGETHER.
               <br />
               STUDY SMARTER.
@@ -481,7 +477,7 @@ export default function LandingPage() {
       <footer className="flex flex-col sm:flex-row items-center justify-between gap-3 px-6 md:px-10 py-6 bg-black">
         <span className="text-sm font-black text-white">BingeStudy</span>
         <div className="flex items-center gap-6 text-xs text-gray-400">
-          <a href="#" className="hover:text-white transition-colors">
+          <a href="/privacy" className="hover:text-white transition-colors">
             Privacy Policy
           </a>
           <a href="#" className="hover:text-white transition-colors">
@@ -507,7 +503,7 @@ function OrbitNode({ icon, label, style }) {
       className="absolute -translate-x-1/2 -translate-y-1/2 flex flex-col items-center gap-2 animate-float"
       style={style}
     >
-      <div className="w-12 h-12 bg-white border border-gray-200 rounded-xl flex items-center justify-center text-black shadow-sm">
+      <div className="w-12 h-12 bg-white dark:bg-gray-900 border border-gray-200 dark:border-gray-700 rounded-xl flex items-center justify-center text-black dark:text-white shadow-sm">
         {icon}
       </div>
       <span className="text-[10px] font-semibold text-gray-500 whitespace-nowrap">
@@ -533,8 +529,10 @@ function Annotation({ number, title, description, align }) {
     <div
       className={`flex flex-col ${align === "right" ? "items-end" : "items-start"}`}
     >
-      <span className="text-3xl font-black text-gray-200 mb-1">{number}</span>
-      <h4 className="font-bold text-black mb-1">{title}</h4>
+      <span className="text-3xl font-black text-gray-200 dark:text-gray-700 mb-1">
+        {number}
+      </span>
+      <h4 className="font-bold text-black dark:text-white mb-1">{title}</h4>
       <p className="text-gray-400 text-sm max-w-[200px]">{description}</p>
     </div>
   );
@@ -543,14 +541,14 @@ function Annotation({ number, title, description, align }) {
 function Stat({ number, label, description, divider, isInfinity }) {
   return (
     <div
-      className={`px-6 md:px-10 py-12 ${divider ? "md:border-l border-gray-100" : ""}`}
+      className={`px-6 md:px-10 py-12 ${divider ? "md:border-l border-gray-100 dark:border-gray-800" : ""}`}
     >
       <div
-        className={`font-black text-black mb-3 ${isInfinity ? "text-5xl" : "text-4xl md:text-5xl"}`}
+        className={`font-black text-black dark:text-white mb-3 ${isInfinity ? "text-5xl" : "text-4xl md:text-5xl"}`}
       >
         {number}
       </div>
-      <h4 className="font-bold text-black mb-1">{label}</h4>
+      <h4 className="font-bold text-black dark:text-white mb-1">{label}</h4>
       <p className="text-gray-400 text-sm">{description}</p>
     </div>
   );
@@ -558,9 +556,11 @@ function Stat({ number, label, description, divider, isInfinity }) {
 
 function FeatureCard({ icon, title, description }) {
   return (
-    <div className="border border-gray-100 rounded-2xl p-5 hover:border-gray-300 hover:shadow-sm transition-all duration-200">
-      <div className="text-black mb-3">{icon}</div>
-      <h4 className="font-bold text-black text-sm mb-1">{title}</h4>
+    <div className="border border-gray-100 dark:border-gray-800 rounded-2xl p-5 hover:border-gray-300 dark:hover:border-gray-600 hover:shadow-sm transition-all duration-200 bg-white dark:bg-gray-900">
+      <div className="text-black dark:text-white mb-3">{icon}</div>
+      <h4 className="font-bold text-black dark:text-white text-sm mb-1">
+        {title}
+      </h4>
       <p className="text-gray-400 text-xs leading-relaxed">{description}</p>
     </div>
   );
@@ -577,10 +577,8 @@ function Avatar({ initial }) {
 function LaptopMockup() {
   return (
     <div className="relative w-full max-w-lg mx-auto px-2 sm:px-0">
-      {/* Laptop body */}
       <div className="bg-[#1a1a1a] rounded-t-xl sm:rounded-t-2xl p-2 sm:p-3 shadow-2xl">
         <div className="bg-white rounded-md sm:rounded-lg overflow-hidden">
-          {/* Browser-ish top bar */}
           <div className="flex items-center gap-2 px-2.5 sm:px-3 py-1.5 sm:py-2 bg-gray-50 border-b border-gray-100">
             <div className="flex gap-1 sm:gap-1.5">
               <div className="w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full bg-gray-300" />
@@ -593,7 +591,6 @@ function LaptopMockup() {
           </div>
 
           <div className="flex h-44 sm:h-56 overflow-hidden">
-            {/* Sidebar — hidden on very small screens */}
             <div className="w-1/3 border-r border-gray-100 p-2 hidden sm:block overflow-hidden">
               <p className="text-[9px] font-bold text-gray-400 uppercase tracking-wide px-1 mb-1.5 truncate">
                 Study Groups
@@ -618,7 +615,6 @@ function LaptopMockup() {
               ))}
             </div>
 
-            {/* Chat */}
             <div className="flex-1 flex flex-col min-w-0 overflow-hidden">
               <div className="px-2.5 sm:px-3 py-1.5 sm:py-2 border-b border-gray-100 shrink-0">
                 <p className="text-[9px] sm:text-[10px] font-bold text-black truncate">
@@ -667,7 +663,6 @@ function LaptopMockup() {
               </div>
             </div>
 
-            {/* AI panel — hidden until md */}
             <div className="w-1/3 border-l border-gray-100 p-2 hidden md:flex flex-col overflow-hidden min-w-0">
               <p className="text-[9px] font-bold text-black flex items-center gap-1 mb-1">
                 <Sparkles size={9} className="shrink-0" /> AI Assistant
@@ -695,7 +690,6 @@ function LaptopMockup() {
           </div>
         </div>
       </div>
-      {/* Laptop base */}
       <div className="h-2 sm:h-3 bg-[#2a2a2a] rounded-b-lg sm:rounded-b-xl mx-1 sm:mx-2" />
       <div className="h-1 sm:h-1.5 bg-[#1a1a1a] rounded-full mx-8 sm:mx-12 -mt-0.5" />
     </div>
