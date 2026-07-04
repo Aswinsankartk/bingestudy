@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { getPostHogClient } from '@/lib/posthog-server'
 
 export async function POST(request) {
   const supabase = await createClient()
@@ -59,6 +60,13 @@ export async function POST(request) {
   if (msgError) {
     return NextResponse.json({ error: msgError.message }, { status: 500 })
   }
+
+  const posthog = getPostHogClient()
+  posthog.capture({
+    distinctId: user.id,
+    event: 'file_uploaded_server',
+    properties: { group_id: groupId, file_type: type, file_name: file.name },
+  })
 
   return NextResponse.json({ publicUrl, type })
 }

@@ -1,12 +1,10 @@
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
 
-// Generate a random 6 character invite code
 function generateCode() {
   return Math.random().toString(36).substring(2, 8).toUpperCase();
 }
 
-// Create a new group
 export async function POST(request) {
   const supabase = await createClient();
   const {
@@ -27,9 +25,8 @@ export async function POST(request) {
   }
 
   const code = generateCode();
-  const admin = createAdminClient();
 
-  const { data: group, error: groupError } = await admin
+  const { data: group, error: groupError } = await supabase
     .from("groups")
     .insert({ name, subject, code, created_by: user.id })
     .select()
@@ -39,7 +36,7 @@ export async function POST(request) {
     return NextResponse.json({ error: groupError.message }, { status: 500 });
   }
 
-  const { error: memberError } = await admin
+  const { error: memberError } = await supabase
     .from("group_members")
     .insert({ group_id: group.id, user_id: user.id, role: "admin" });
 
@@ -50,7 +47,6 @@ export async function POST(request) {
   return NextResponse.json({ group }, { status: 201 });
 }
 
-// Get all groups for the logged in user
 export async function GET() {
   const supabase = await createClient();
   const {

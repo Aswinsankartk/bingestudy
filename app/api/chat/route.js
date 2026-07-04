@@ -1,6 +1,8 @@
 import { GoogleGenerativeAI } from "@google/generative-ai";
 import { createClient } from "@/lib/supabase/server";
 import { NextResponse } from "next/server";
+import { getPostHogClient } from "@/lib/posthog-server";
+import { randomUUID } from "crypto";
 
 export async function POST(request) {
   const supabase = await createClient();
@@ -35,8 +37,46 @@ export async function POST(request) {
         })) || [],
     });
 
-    const result = await chat.sendMessage(message);
+    const traceId = randomUUID();
+    const startTime = Date.now();
+    let result;
+    try {
+      result = await chat.sendMessage(message);
+    } catch (llmError) {
+      const posthog = getPostHogClient();
+      posthog.capture({
+        distinctId: user.id,
+        event: "$ai_generation",
+        properties: {
+          $ai_trace_id: traceId,
+          $ai_session_id: groupId,
+          $ai_model: "gemini-2.5-flash",
+          $ai_provider: "google",
+          $ai_latency: (Date.now() - startTime) / 1000,
+          $ai_is_error: true,
+          $ai_error: llmError.message,
+        },
+      });
+      return NextResponse.json({ error: llmError.message }, { status: 500 });
+    }
+
     const reply = result.response.text();
+    const usage = result.response.usageMetadata;
+
+    const posthog = getPostHogClient();
+    posthog.capture({
+      distinctId: user.id,
+      event: "$ai_generation",
+      properties: {
+        $ai_trace_id: traceId,
+        $ai_session_id: groupId,
+        $ai_model: "gemini-2.5-flash",
+        $ai_provider: "google",
+        $ai_input_tokens: usage?.promptTokenCount,
+        $ai_output_tokens: usage?.candidatesTokenCount,
+        $ai_latency: (Date.now() - startTime) / 1000,
+      },
+    });
 
     // Save user message to database
     await supabase.from("ai_chats").insert({

@@ -1,5 +1,6 @@
 import { createClient } from '@/lib/supabase/server'
 import { NextResponse } from 'next/server'
+import { getPostHogClient } from '@/lib/posthog-server'
 
 export async function POST(request) {
   const supabase = await createClient()
@@ -46,6 +47,13 @@ export async function POST(request) {
   if (memberError) {
     return NextResponse.json({ error: memberError.message }, { status: 500 })
   }
+
+  const posthog = getPostHogClient()
+  posthog.capture({
+    distinctId: user.id,
+    event: 'group_joined_server',
+    properties: { group_id: group.id, group_name: group.name },
+  })
 
   return NextResponse.json({ group })
 }

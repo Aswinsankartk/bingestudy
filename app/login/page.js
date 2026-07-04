@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
+import posthog from "posthog-js";
 
 export default function LoginPage() {
   const supabase = createClient();
@@ -18,6 +19,7 @@ export default function LoginPage() {
   // Google Login
   const handleGoogleLogin = async () => {
     setGoogleLoading(true);
+    posthog.capture("google_login_clicked");
     await supabase.auth.signInWithOAuth({
       provider: "google",
       options: {
@@ -33,20 +35,28 @@ export default function LoginPage() {
     setMessage("");
 
     if (isSignUp) {
-      const { error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await supabase.auth.signUp({ email, password });
       if (error) {
         setMessage(error.message);
       } else {
         setMessage("Check your email for a confirmation link!");
+        if (data?.user) {
+          posthog.identify(data.user.id, { email: data.user.email });
+          posthog.capture("user_signed_up", { method: "email" });
+        }
       }
     } else {
-      const { error } = await supabase.auth.signInWithPassword({
+      const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
       if (error) {
         setMessage(error.message);
       } else {
+        if (data?.user) {
+          posthog.identify(data.user.id, { email: data.user.email });
+          posthog.capture("user_logged_in", { method: "email" });
+        }
         router.push("/dashboard");
       }
     }

@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { ChevronLeft, Save } from "lucide-react";
+import posthog from "posthog-js";
 
 export default function ProfilePage() {
   const supabase = createClient();
@@ -61,6 +62,7 @@ export default function ProfilePage() {
       console.log("Profile save error:", error);
       setMessage(`Error: ${error.message}`);
     } else {
+      posthog.capture("profile_saved");
       setMessage("Profile saved successfully!");
     }
     setSaving(false);

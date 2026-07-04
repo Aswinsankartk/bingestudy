@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter } from "next/navigation";
 import { Plus, UserPlus, Trash2, Users, LogOut, BookOpen } from "lucide-react";
+import posthog from "posthog-js";
 
 export default function Dashboard() {
   const supabase = createClient();
@@ -36,6 +37,7 @@ export default function Dashboard() {
         return;
       }
       setUser(user);
+      posthog.identify(user.id, { email: user.email });
       await fetchGroups();
     };
     init();
@@ -68,6 +70,7 @@ export default function Dashboard() {
     }
 
     setShowCreate(false);
+    posthog.capture("group_created", { group_name: groupName, subject: groupSubject });
     setGroupName("");
     setGroupSubject("");
     setCreateLoading(false);
@@ -93,6 +96,7 @@ export default function Dashboard() {
     }
 
     setShowJoin(false);
+    posthog.capture("group_joined", { invite_code: joinCode });
     setJoinCode("");
     setJoinLoading(false);
     await fetchGroups();
@@ -109,6 +113,7 @@ export default function Dashboard() {
     const data = await res.json();
 
     if (res.ok) {
+      posthog.capture("group_deleted", { group_name: groupName });
       await fetchGroups();
     } else {
       alert(data.error);
@@ -118,6 +123,7 @@ export default function Dashboard() {
 
   const handleLogout = async () => {
     setLogoutLoading(true);
+    posthog.reset();
     await supabase.auth.signOut();
     router.push("/login");
   };

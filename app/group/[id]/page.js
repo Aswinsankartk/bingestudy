@@ -4,6 +4,7 @@ import { useEffect, useState, useRef } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { useRouter, useParams } from "next/navigation";
 import ReactMarkdown from "react-markdown";
+import posthog from "posthog-js";
 import {
   Trash2,
   Paperclip,
@@ -248,6 +249,7 @@ export default function GroupRoom() {
       content: newMessage.trim(),
       reply_to: replyingTo?.id || null,
     });
+    posthog.capture("message_sent", { group_id: id, has_reply: !!replyingTo });
     setNewMessage("");
     setReplyingTo(null);
     setSending(false);
@@ -262,7 +264,11 @@ export default function GroupRoom() {
     formData.append("groupId", id);
     const res = await fetch("/api/upload", { method: "POST", body: formData });
     const data = await res.json();
-    if (!res.ok) alert(data.error);
+    if (!res.ok) {
+      alert(data.error);
+    } else {
+      posthog.capture("file_uploaded", { group_id: id, file_type: data.type });
+    }
     setUploading(false);
     e.target.value = "";
   };
@@ -309,6 +315,7 @@ export default function GroupRoom() {
     const data = await res.json();
 
     if (res.ok) {
+      posthog.capture("group_left", { group_id: id });
       router.push("/dashboard");
     } else {
       alert(data.error);
@@ -334,6 +341,7 @@ export default function GroupRoom() {
     if (!aiInput.trim()) return;
     setAiLoading(true);
     const userMessage = aiInput.trim();
+    posthog.capture("ai_question_asked", { group_id: id });
     setAiInput("");
     setAiMessages((prev) => [...prev, { role: "user", content: userMessage }]);
     const res = await fetch("/api/chat", {
