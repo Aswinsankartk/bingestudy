@@ -4,13 +4,13 @@
 
 BingeStudy is a real-time, web-based study platform where students can create private groups, share study materials, and get instant answers from an AI chatbot — all in one place.
 
-> Full Stack Web Application
+> BCA Final Year Project | Full Stack Web Application | Bangalore University (NEP)
 
 ---
 
 ## 🌐 Live Demo
 
-🔗 **[bingestudy.dpdns.org](https://bingestudy.dpdns.org)**
+🔗 **[bingestudy.vercel.app](https://bingestudy.vercel.app)**
 
 ---
 
@@ -256,7 +256,7 @@ The built-in AI assistant is powered by **Google Gemini 2.5 Flash**. Students ca
 ## 👨‍💻 Author
 
 **Aswin Sankar TK**  
-MERN Stack Developer
+BCA Final Year Student | Bangalore University (NEP)
 
 🔗 [LinkedIn](https://linkedin.com/in/aswinsankartk) | 🐙 [GitHub](https://github.com/Aswinsankartk) | 📂 [Portfolio](https://aswinsankar.vercel.app)
 
@@ -268,4 +268,4 @@ This project is open source and available under the [MIT License](LICENSE.txt).
 
 ---
 
-<p align="center">Built with ❤️ as a Portfolio Project</p>
+<p align="center">Built with ❤️ as a Academic Project</p>
