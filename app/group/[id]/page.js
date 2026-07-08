@@ -559,9 +559,9 @@ export default function GroupRoom() {
     );
 
   return (
-    <main className="h-screen bg-white flex flex-col overflow-hidden">
+    <main className="h-screen bg-white flex flex-col overflow-hidden dark:bg-gray-950">
       {/* Navbar */}
-      <nav className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-gray-100 shrink-0 bg-white/80 backdrop-blur-sm">
+      <nav className="flex items-center justify-between px-4 md:px-6 py-3 border-b border-gray-100 dark:border-gray-800 shrink-0 bg-white/80 backdrop-blur-sm dark:bg-gray-950/80">
         <div className="flex items-center gap-3 min-w-0">
           <button
             onClick={() => router.push("/dashboard")}

@@ -70,7 +70,10 @@ export default function Dashboard() {
     }
 
     setShowCreate(false);
-    posthog.capture("group_created", { group_name: groupName, subject: groupSubject });
+    posthog.capture("group_created", {
+      group_name: groupName,
+      subject: groupSubject,
+    });
     setGroupName("");
     setGroupSubject("");
     setCreateLoading(false);
@@ -131,12 +134,12 @@ export default function Dashboard() {
   if (!user) return null;
 
   return (
-    <main className="relative min-h-screen bg-white">
+    <main className="relative min-h-screen bg-white dark:bg-gray-950">
       {/* Ambient background texture */}
       <div className="absolute inset-0 bg-dot-grid [mask-image:radial-gradient(ellipse_80%_50%_at_50%_0%,#000_30%,transparent_100%)] pointer-events-none" />
 
       {/* Navbar */}
-      <nav className="relative flex items-center justify-between px-6 md:px-8 py-4 border-b border-gray-100 bg-white/80 backdrop-blur-sm">
+      <nav className="relative flex items-center justify-between px-6 md:px-8 py-4 border-b border-gray-100 bg-white/80 backdrop-blur-sm dark:bg-gray-950/80 dark:border-gray-800">
         <span className="text-xl font-black tracking-tight text-black">
           BingeStudy
         </span>
@@ -208,7 +211,10 @@ export default function Dashboard() {
         {loading ? (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
             {[1, 2, 3, 4].map((i) => (
-              <div key={i} className="border border-gray-100 rounded-2xl p-6">
+              <div
+                key={i}
+                className="border border-gray-100 rounded-2xl p-6 dark:bg-gray-900 border-gray-200 dark:border-gray-800"
+              >
                 <div className="h-4 rounded mb-3 w-3/4 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 bg-[length:200%_100%] animate-shimmer" />
                 <div className="h-3 rounded w-1/2 bg-gradient-to-r from-gray-100 via-gray-200 to-gray-100 bg-[length:200%_100%] animate-shimmer" />
               </div>
@@ -294,7 +300,7 @@ export default function Dashboard() {
       {/* Create Group Modal */}
       {showCreate && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center px-4 z-50 animate-fade-in">
-          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl animate-scale-in">
+          <div className="bg-white rounded-2xl p-6 dark:bg-gray-900 border-gray-200 dark:border-gray-800 md:p-8 w-full max-w-md shadow-xl animate-scale-in">
             <h3 className="text-xl font-black text-black mb-5">
               Create a Group
             </h3>
@@ -346,7 +352,7 @@ export default function Dashboard() {
       {/* Join Group Modal */}
       {showJoin && (
         <div className="fixed inset-0 bg-black/50 flex items-center justify-center px-4 z-50 animate-fade-in">
-          <div className="bg-white rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl animate-scale-in">
+          <div className="bg-white dark:bg-gray-900 border-gray-200 dark:border-gray-800 rounded-2xl p-6 md:p-8 w-full max-w-md shadow-xl animate-scale-in">
             <h3 className="text-xl font-black text-black mb-5">Join a Group</h3>
             <form onSubmit={handleJoinGroup} className="flex flex-col gap-4">
               <input
