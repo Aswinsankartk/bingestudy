@@ -12,7 +12,6 @@ import {
   Send,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
-import ThemeToggle from "@/components/ThemeToggle";
 
 export default function LandingPage() {
   return (
@@ -23,7 +22,6 @@ export default function LandingPage() {
           BingeStudy
         </span>
         <div className="flex items-center gap-3">
-          <ThemeToggle />
           <Link
             href="/login"
             className="text-sm font-semibold text-black dark:text-white border border-gray-200 dark:border-gray-700 px-5 py-2 rounded-full hover:border-black dark:hover:border-white transition-all duration-200"
