@@ -12,6 +12,9 @@ export const metadata = {
     default: "BingeStudy — Study Together. Study Smarter.",
     template: "%s | BingeStudy",
   },
+  verification: {
+    google: "8nizk4PobkHiKBE9GgCFJ5d59-ROmBkVepPiuQY0hzc",
+  },
   description:
     "Create private study groups, share notes and materials in real time, and get instant answers from an AI assistant.",
   keywords: [

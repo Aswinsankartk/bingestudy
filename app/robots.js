@@ -3,7 +3,7 @@ export default function robots() {
     rules: [
       {
         userAgent: "*",
-        allow: ["/", "/login"],
+        allow: ["/", "/login", "/privacy", "/terms", "/contact"],
         disallow: [
           "/api",
           "/auth",
