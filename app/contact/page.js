@@ -167,9 +167,9 @@ export default function ContactPage() {
             >
               <Instagram size={18} />
             </SocialIcon>
-            <SocialIcon href="https://x.com/bingestudyapp" label="X">
+            {/* <SocialIcon href="https://x.com/bingestudyapp" label="X">
               <Twitter size={18} />
-            </SocialIcon>
+            </SocialIcon> */}
           </div>
         </div>
       </section>
