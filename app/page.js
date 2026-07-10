@@ -12,10 +12,31 @@ import {
   Send,
 } from "lucide-react";
 import Reveal from "@/components/Reveal";
+import Image from "next/image";
 
 export default function LandingPage() {
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    name: "BingeStudy",
+    applicationCategory: "EducationalApplication",
+    operatingSystem: "Web",
+    description:
+      "Create private study groups, share notes and materials in real time, and get instant answers from an AI assistant.",
+    offers: {
+      "@type": "Offer",
+      price: "0",
+      priceCurrency: "USD",
+    },
+    url: "https://bingestudy.vercel.app",
+  };
+
   return (
     <main className="min-h-screen bg-white dark:bg-gray-950">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
       {/* ============ NAVBAR ============ */}
       <nav className="flex items-center justify-between px-6 md:px-10 py-5 border-b border-gray-100 dark:border-gray-800 dark:bg-gray-950">
         <span className="text-xl font-black tracking-tight text-black dark:text-white">
@@ -432,7 +453,7 @@ export default function LandingPage() {
               For Students.
             </h3>
             <div className="flex items-center gap-3">
-              <Avatar initial="A" />
+              <Avatar src="/aswin.webp" alt="Aswin Sankar" />
               <div>
                 <p className="text-white text-sm font-semibold">Aswin Sankar</p>
                 <p className="text-gray-500 text-xs">Developer</p>
@@ -481,7 +502,7 @@ export default function LandingPage() {
           <a href="#" className="hover:text-white transition-colors">
             Terms of Service
           </a>
-          <a href="#" className="hover:text-white transition-colors">
+          <a href="/contact" className="hover:text-white transition-colors">
             Contact
           </a>
         </div>
@@ -564,10 +585,16 @@ function FeatureCard({ icon, title, description }) {
   );
 }
 
-function Avatar({ initial }) {
+function Avatar({ src, alt }) {
   return (
-    <div className="w-9 h-9 rounded-full bg-gray-700 border-2 border-black flex items-center justify-center text-white text-xs font-bold">
-      {initial}
+    <div className="w-9 h-9 rounded-full overflow-hidden border-2 border-black shrink-0">
+      <Image
+        src={src}
+        alt={alt}
+        width={36}
+        height={36}
+        className="object-cover w-full h-full"
+      />
     </div>
   );
 }

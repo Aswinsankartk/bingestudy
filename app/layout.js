@@ -7,13 +7,25 @@ const inter = Inter({
 });
 
 export const metadata = {
-  title: "BingeStudy",
-  description: "A collaborative note sharing platform for students",
+  metadataBase: new URL("https://bingestudy.vercel.app"),
+  title: {
+    default: "BingeStudy — Study Together. Study Smarter.",
+    template: "%s | BingeStudy",
+  },
+  description:
+    "Create private study groups, share notes and materials in real time, and get instant answers from an AI assistant.",
+  keywords: [
+    "study group app",
+    "collaborative study platform",
+    "student note sharing",
+    "real-time study chat",
+    "AI study assistant",
+  ],
   openGraph: {
     title: "BingeStudy — Study Together. Study Smarter.",
     description:
       "Create private study groups, share notes and materials in real time, and get instant answers from an AI assistant.",
-    url: "https://bingestudy.dpdns.org",
+    url: "https://bingestudy.vercel.app",
     siteName: "BingeStudy",
     images: [
       {
@@ -31,6 +43,13 @@ export const metadata = {
     description:
       "Create private study groups, share notes and materials in real time, and get instant answers from an AI assistant.",
     images: ["/og-image.png"],
+  },
+  robots: {
+    index: true,
+    follow: true,
+  },
+  alternates: {
+    canonical: "https://bingestudy.vercel.app",
   },
 };
 
